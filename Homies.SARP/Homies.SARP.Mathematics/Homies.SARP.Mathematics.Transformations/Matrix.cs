@@ -16,7 +16,6 @@ namespace Homies.SARP.Mathematics.Transformations
 		public Matrix3D Matrix3D { get => _matrix3D; set => _matrix3D = value; }
 		#endregion
 
-
 		public Matrix(DenseMatrix matrix = null)
 		{
 			DenseMatrix = matrix;

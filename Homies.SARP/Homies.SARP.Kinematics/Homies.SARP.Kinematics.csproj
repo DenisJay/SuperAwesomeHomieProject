@@ -47,6 +47,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Enums\" />
     <Folder Include="Forward\" />
     <Folder Include="Inverse\" />
   </ItemGroup>

@@ -6,7 +6,8 @@ using System.Text;
 
 namespace Homies.SARP.Kinematics.Base
 {
-	public class PrismaticJoint
+	public class PrismaticJoint : Joint
 	{
+
 	}
 }

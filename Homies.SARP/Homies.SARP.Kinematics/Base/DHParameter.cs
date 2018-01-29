@@ -27,7 +27,6 @@ namespace Homies.SARP.Kinematics.Base
 
 		#endregion //PROPERTIES
 
-
 		public DHParameter(double a, double d, double alpha, double theta)
 		{
 			A = a;
@@ -35,7 +34,5 @@ namespace Homies.SARP.Kinematics.Base
 			Alpha = alpha;
 			Theta = theta;
 		}
-
-
 	}
 }

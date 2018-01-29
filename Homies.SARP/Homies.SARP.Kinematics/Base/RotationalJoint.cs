@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Homies.SARP.Kinematics.Base
 {
-	public class RotationalJoint
+	public class RotationalJoint : Joint
 	{
 
 	}
