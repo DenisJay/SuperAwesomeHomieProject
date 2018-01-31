@@ -30,6 +30,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MathNet.Numerics, Version=3.20.2.0, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,16 +41,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base\DHParameter.cs" />
-    <Compile Include="Base\Joint.cs" />
-    <Compile Include="Base\PrismaticJoint.cs" />
-    <Compile Include="Base\RotationalJoint.cs" />
+    <Compile Include="Homies.SARP.Kinematics.Base\DHParameter.cs" />
+    <Compile Include="Homies.SARP.Kinematics.Base\Joint.cs" />
+    <Compile Include="Homies.SARP.Kinematics.Base\PrismaticJoint.cs" />
+    <Compile Include="Homies.SARP.Kinematics.Base\RotationalJoint.cs" />
+    <Compile Include="Homies.SARP.Kinematics.Forward\IForwardKinematics.cs" />
+    <Compile Include="Homies.SARP.Kinematics.Forward\SerialChainKinematics.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Enums\" />
-    <Folder Include="Forward\" />
-    <Folder Include="Inverse\" />
+    <Folder Include="Homies.SARP.Kinematics.Enums\" />
+    <Folder Include="Homies.SARP.Kinematics.Inverse\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Homies.SARP.Mathematics\Homies.SARP.Mathematics.csproj">
+      <Project>{6cf733a3-4854-4550-aa38-cf8f378c8f29}</Project>
+      <Name>Homies.SARP.Mathematics</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
