@@ -1,5 +1,4 @@
 # SuperAwesomeHomieProject
-Just some awesome stuff we're gonna be doing here
 
 What is this all about?
 In this project we try to provide a clean and lightweight approach to simulating and visualizing kinematics. Using well-established technologies as foundation we aim to offer an easy-to-use machinery for your needs.
