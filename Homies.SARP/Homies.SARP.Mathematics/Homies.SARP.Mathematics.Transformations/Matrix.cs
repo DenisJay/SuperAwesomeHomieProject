@@ -1,55 +1,59 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows.Media.Media3D;
 using MathNet.Numerics.LinearAlgebra.Double;
 
 namespace Homies.SARP.Mathematics.Transformations
 {
-	public class Matrix
-	{
-		#region FIELDS
-		DenseMatrix _denseMatrix;
-		Matrix3D _matrix3D;
-		#endregion
+    [DebuggerDisplay("{ToString()}")]
+    public class Matrix
+    {
+        #region FIELDS
+        DenseMatrix _denseMatrix;
+        Matrix3D _matrix3D;
+        #endregion
 
-		#region PROPERTIES
-		public DenseMatrix DenseMatrix { get => _denseMatrix; set => _denseMatrix = value; }
-		public Matrix3D Matrix3D { get => _matrix3D; set => _matrix3D = value; }
-		#endregion
+        #region PROPERTIES
+        public DenseMatrix DenseMatrix { get => _denseMatrix; set => _denseMatrix = value; }
 
-		public Matrix(DenseMatrix matrix = null)
-		{
-			DenseMatrix = matrix;
-		}
+        //TODO: Matrix3D private schalten, da wir mit GetMatrix3D öffentlichen Zugang ermöglichen?
+        public Matrix3D Matrix3D { get => _matrix3D; set => _matrix3D = value; }
+        #endregion
 
-		public Matrix3D GetMatrix3D()
-		{
-			throw new NotImplementedException();
-		}
+        public Matrix(DenseMatrix matrix = null)
+        {
+            DenseMatrix = matrix;
+        }
 
-		public override string ToString()
-		{
-			if (DenseMatrix !=null)
-			{
-				return DenseMatrix.ToString();
-			}
+        public Matrix3D GetMatrix3D()
+        {
+            throw new NotImplementedException();
+        }
 
-			return ("DenseMatrix is null\t" + base.ToString());
-		}
+        public override string ToString()
+        {
+            if (DenseMatrix != null)
+            {
+                return DenseMatrix.ToString();
+            }
 
-		public override bool Equals(object obj)
-		{
-			var mat = obj as Matrix;
-			if (mat != null)
-			{
-				return DenseMatrix.Equals(mat.DenseMatrix);
-			}
+            return ("DenseMatrix is null\t" + base.ToString());
+        }
 
-			return false;
-		}
+        public override bool Equals(object obj)
+        {
+            if (obj is Matrix mat)
+            {
+                return DenseMatrix.Equals(mat.DenseMatrix);
+            }
 
-		public override int GetHashCode()
-		{
-			return base.GetHashCode();
-		}
-	}
+            return false;
+        }
+
+        //TODO: Der override ist überflüssig, wenn nur base aufgerufen wird, oder?
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+    }
 }

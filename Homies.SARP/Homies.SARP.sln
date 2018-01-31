@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.15
+VisualStudioVersion = 15.0.27130.2024
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Homies.SARP.Mathematics", "Homies.SARP.Mathematics\Homies.SARP.Mathematics.csproj", "{6CF733A3-4854-4550-AA38-CF8F378C8F29}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Homies.SARP.UnitTestsAreBad", "Homies.SARP.UnitTestsAreBad", "{CB08F215-7132-466F-BE8A-26116E875779}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Homies.SARP.Kinematics", "Homies.SARP.Kinematics\Homies.SARP.Kinematics.csproj", "{BFF9F5E1-0CC3-4A02-973C-7286E76DDC51}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Homies.SARP.UnitTest", "Homies.SARP.UnitTest\Homies.SARP.UnitTest.csproj", "{CB45B08E-C8A1-4DB2-95D3-614CA7CFF5A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,8 +25,15 @@ Global
 		{BFF9F5E1-0CC3-4A02-973C-7286E76DDC51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BFF9F5E1-0CC3-4A02-973C-7286E76DDC51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BFF9F5E1-0CC3-4A02-973C-7286E76DDC51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB45B08E-C8A1-4DB2-95D3-614CA7CFF5A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB45B08E-C8A1-4DB2-95D3-614CA7CFF5A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB45B08E-C8A1-4DB2-95D3-614CA7CFF5A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB45B08E-C8A1-4DB2-95D3-614CA7CFF5A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D76CFDBC-CDCF-4B1F-A201-FDC420DD94B2}
 	EndGlobalSection
 EndGlobal
