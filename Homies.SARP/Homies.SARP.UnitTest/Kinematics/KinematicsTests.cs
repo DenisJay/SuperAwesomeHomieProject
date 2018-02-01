@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Homies.SARP.Kinematics.Base;
 using Homies.SARP.Kinematics.Homies.SARP.Kinematics.Forward;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
