@@ -4,13 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BFF9F5E1-0CC3-4A02-973C-7286E76DDC51}</ProjectGuid>
+    <ProjectGuid>{10BF2D83-0333-4090-BDD3-E62AFD1B9229}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Homies.SARP.Kinematics</RootNamespace>
-    <AssemblyName>Homies.SARP.Kinematics</AssemblyName>
+    <RootNamespace>Homies.SARP.Machines</RootNamespace>
+    <AssemblyName>Homies.SARP.Machines</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,7 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MathNet.Numerics, Version=3.20.2.0, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,24 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Homies.SARP.Kinematics.Forward\IForwardKinematics.cs" />
-    <Compile Include="Homies.SARP.Kinematics.Forward\SerialChainKinematics.cs" />
-    <Compile Include="Homies.SARP.Kinematics.Inverse\InverseKinematics.cs" />
+    <Compile Include="Homies.SARP.Machines.BaseStructure\DHParameter.cs" />
+    <Compile Include="Homies.SARP.Machines.BaseStructure\Joint.cs" />
+    <Compile Include="Homies.SARP.Machines.BaseStructure\PrismaticJoint.cs" />
+    <Compile Include="Homies.SARP.Machines.BaseStructure\RotationalJoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Homies.SARP.Kinematics.Base\" />
-    <Folder Include="Homies.SARP.Kinematics.Enums\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Homies.SARP.Machines\Homies.SARP.Machines.csproj">
-      <Project>{10bf2d83-0333-4090-bdd3-e62afd1b9229}</Project>
-      <Name>Homies.SARP.Machines</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Homies.SARP.Mathematics\Homies.SARP.Mathematics.csproj">
-      <Project>{6cf733a3-4854-4550-aa38-cf8f378c8f29}</Project>
-      <Name>Homies.SARP.Mathematics</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
