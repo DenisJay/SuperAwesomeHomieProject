@@ -17,7 +17,7 @@ namespace Homies.SARP.UnitTest.Extensions
         /// <param name="obj"> Object to be checked. </param>
         public static bool IsAFreaking<T>(this object obj)
         {
-            return !(obj is T);
+            return (obj is T);
         }
 
         /// <summary>
