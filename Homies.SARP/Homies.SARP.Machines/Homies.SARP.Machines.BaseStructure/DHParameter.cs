@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Homies.SARP.Kinematics.Base
+namespace Homies.SARP.Machines.BaseStructure
 {
 	public class DHParameter
 	{

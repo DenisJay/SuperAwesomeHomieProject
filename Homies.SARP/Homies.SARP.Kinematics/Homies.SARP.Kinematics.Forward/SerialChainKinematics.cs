@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Homies.SARP.Kinematics.Base;
+using Homies.SARP.Machines.BaseStructure;
 using Homies.SARP.Mathematics.Transformations;
 
 namespace Homies.SARP.Kinematics.Forward
 {
 	public class SerialChainKinematics : IForwardKinematics
 	{
-
-
 
 		public TransformationMatrix GetTerminalFrame(List<Joint> joints)
 		{
@@ -22,9 +20,6 @@ namespace Homies.SARP.Kinematics.Forward
 			{
 
 			}
-
-
-
 
 			throw new NotImplementedException();
 		}

@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace Homies.SARP.Kinematics.Base
+namespace Homies.SARP.Machines.BaseStructure
 {
     public abstract class Joint
     {

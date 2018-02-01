@@ -6,7 +6,7 @@ using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Windows.Media.Media3D;
 
-namespace Homies.SARP.Kinematics.Base
+namespace Homies.SARP.Machines.BaseStructure
 {
     public class PrismaticJoint : Joint
     {

@@ -1,4 +1,4 @@
-﻿using Homies.SARP.Kinematics.Base;
+﻿using Homies.SARP.Machines.BaseStructure;
 using Homies.SARP.Mathematics.Transformations;
 using System;
 using System.Collections.Generic;
