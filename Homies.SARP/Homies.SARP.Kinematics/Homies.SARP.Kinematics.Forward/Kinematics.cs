@@ -7,7 +7,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Media3D;
-using Homies.SARP.Kinematics.Base;
+using Homies.SARP.Machines.BaseStructure;
 
 namespace Homies.SARP.Kinematics.Homies.SARP.Kinematics.Forward
 {
@@ -37,6 +37,7 @@ namespace Homies.SARP.Kinematics.Homies.SARP.Kinematics.Forward
 
             JointCollection = new SortedList<int, Joint>();
 
+			//TODO: watch out for the < instead of the <= sign
             for (var i = 0; i < joints.Count() - 1; i++)
             {
                 JointCollection.Add(i, joints.ElementAt(i));

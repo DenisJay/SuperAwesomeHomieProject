@@ -47,6 +47,10 @@
     <Compile Include="Homies.SARP.Machines.BaseStructure\Joint.cs" />
     <Compile Include="Homies.SARP.Machines.BaseStructure\PrismaticJoint.cs" />
     <Compile Include="Homies.SARP.Machines.BaseStructure\RotationalJoint.cs" />
+    <Compile Include="Homies.SARP.Machines.Factories\ABBRobotModelFactory.cs" />
+    <Compile Include="Homies.SARP.Machines.Factories\DHParameterFactory.cs" />
+    <Compile Include="Homies.SARP.Machines.Factories\KukaRobotModelFactory.cs" />
+    <Compile Include="Homies.SARP.Machines.Factories\RobotModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -108,7 +108,8 @@ namespace Homies.SARP.Mathematics.Transformations
 
         public override bool Equals(object obj)
         {
-            if (obj is TransformationMatrix mat)
+			var mat = obj as TransformationMatrix;
+            if (mat != null)
             {
                 return DenseMatrix.Equals(mat.DenseMatrix);
             }

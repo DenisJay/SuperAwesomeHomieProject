@@ -44,9 +44,9 @@ namespace Homies.SARP.UnitTest.Mathematics
 			var mat = new TransformationMatrix();
 
 			//Assert
-			Assert.IsFalse(mat is null);
+			Assert.IsFalse(mat == null);
 			Assert.IsTrue(mat.Matrix3D == Matrix3D.Identity);
-			Assert.IsFalse(mat.DenseMatrix is null);
+			Assert.IsFalse(mat.DenseMatrix == null);
 		}
 
 		[TestMethod]

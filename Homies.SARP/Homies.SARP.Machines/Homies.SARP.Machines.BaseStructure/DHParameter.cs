@@ -20,12 +20,34 @@ namespace Homies.SARP.Machines.BaseStructure
 
 		#region PROPERTIES
 
-		public double A { get => _a; private set => _a = value; }
-		public double Alpha { get => _alpha; private set => _alpha = value; }
-		public double D { get => _d; set => _d = value; }
-		public double Theta { get => _theta; set => _theta = value; }
+
+		public double Theta
+		{
+			get { return _theta; }
+			set { _theta = value; }
+		}
+
+		public double A
+		{
+			get { return _a; }
+			private set { _a = value; }
+		}
+
+		public double Alpha
+		{
+			get { return _alpha; }
+			private set { _alpha = value; }
+		}
+
+		public double D
+		{
+			get { return _d; }
+			set { _d = value; }
+		}
 
 		#endregion //PROPERTIES
+
+
 
 		public DHParameter(double a, double d, double alpha, double theta)
 		{
