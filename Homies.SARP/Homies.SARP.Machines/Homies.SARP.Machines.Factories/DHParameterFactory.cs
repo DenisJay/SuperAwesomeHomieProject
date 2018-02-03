@@ -23,26 +23,27 @@ namespace Homies.SARP.Machines.Factories
 
 			var parameter = new List<DHParameter>();
 
+
+			//TODO: Implement other robot models
 			switch (model)
 			{
 				case RobotModel.Kuka_KR300_R2500:
+					throw new NotImplementedException();
 					break;
 				case RobotModel.Kuka_KR270_R2700:
+					parameter = KukaRobotModelFactory.GetDHForKR270R2700();
 					break;
 				case RobotModel.Kuka_KR240_R2900:
+					throw new NotImplementedException();
 					break;
 				case RobotModel.Kuka_KR210_R3100:
+					throw new NotImplementedException();
 					break;
 				default:
 					break;
 			}
 
-			parameter.Add(new DHParameter(0, 0, 0, 0));
-			parameter.Add(new DHParameter(0, 0, 0, 0));
-			parameter.Add(new DHParameter(0, 0, 0, 0));
-			parameter.Add(new DHParameter(0, 0, 0, 0));
-			parameter.Add(new DHParameter(0, 0, 0, 0));
-			parameter.Add(new DHParameter(0, 0, 0, 0));
+
 
 			return parameter;
 		}
