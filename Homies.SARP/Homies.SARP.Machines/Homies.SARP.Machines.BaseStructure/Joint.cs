@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Homies.SARP.Mathematics.Transformations;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -40,7 +41,11 @@ namespace Homies.SARP.Machines.BaseStructure
 
         public readonly double MotionMaximum;
 
-        #endregion
+		public TransformationMatrix jointTransformation
+		{
+			get { return DhParameter.GetJointTransformation(); }
+		}
 
-    }
+		#endregion
+	}
 }

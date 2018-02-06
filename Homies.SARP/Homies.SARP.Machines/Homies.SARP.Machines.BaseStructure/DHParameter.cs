@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Homies.SARP.Mathematics.Transformations;
+using MathNet.Numerics.LinearAlgebra.Double;
 
 namespace Homies.SARP.Machines.BaseStructure
 {
@@ -33,10 +35,29 @@ namespace Homies.SARP.Machines.BaseStructure
             Theta = theta;
         }
 
-        #region PROPERTIES
+		internal TransformationMatrix GetJointTransformation()
+		{
+			double ct = Math.Cos(Theta);
+			double st = Math.Sin(Theta);
+			double ca = Math.Cos(Alpha);
+			double sa = Math.Sin(Alpha);
 
-        //TODO: Wieso sind Theta und D public settable?
-        public double Theta
+			DenseMatrix jointTransform = DenseMatrix.OfArray(new double[,]
+				{
+					{ct, -st*ca, st*sa, A*ct},
+					{st, ct*ca, -ct*sa, A*st},
+					{0, sa, ca, D},
+					{0,0,0,1}
+				});
+
+			var retTrans = new TransformationMatrix(jointTransform);
+			return retTrans;
+		}
+
+		#region PROPERTIES
+
+		//TODO: Wieso sind Theta und D public settable?
+		public double Theta
         {
             get { return _theta; }
             set { _theta = value; }
@@ -61,7 +82,5 @@ namespace Homies.SARP.Machines.BaseStructure
         }
 
         #endregion //PROPERTIES
-
-
     }
 }
