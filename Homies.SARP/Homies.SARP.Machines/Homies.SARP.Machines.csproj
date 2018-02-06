@@ -50,8 +50,15 @@
     <Compile Include="Homies.SARP.Machines.Factories\ABBRobotModelFactory.cs" />
     <Compile Include="Homies.SARP.Machines.Factories\DHParameterFactory.cs" />
     <Compile Include="Homies.SARP.Machines.Factories\KukaRobotModelFactory.cs" />
-    <Compile Include="Homies.SARP.Machines.Factories\RobotModel.cs" />
+    <Compile Include="Homies.SARP.Machines.Factories\RobotModels.cs" />
+    <Compile Include="Homies.SARP.Machines.MachineStructures\Robot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Homies.SARP.Mathematics\Homies.SARP.Mathematics.csproj">
+      <Project>{6cf733a3-4854-4550-aa38-cf8f378c8f29}</Project>
+      <Name>Homies.SARP.Mathematics</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

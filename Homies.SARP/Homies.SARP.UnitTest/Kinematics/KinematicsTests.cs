@@ -20,7 +20,7 @@ namespace Homies.SARP.UnitTest.Kinematics
 		[TestInitialize]
 		public void InitializeTestVariables()
 		{
-			_dhParam = DHParameterFactory.GetDhParameterForRobot(RobotModel.Kuka_KR270_R2700);
+			_dhParam = DHParameterFactory.GetDhParameterForRobot(RobotModels.Kuka_KR270_R2700);
 		}
 
 		#region CheckDHParameter

@@ -105,5 +105,16 @@ namespace Homies.SARP.UnitTest.Mathematics
 				pointResult3D.Z == pointResultDense[2]);
 		}
 
+
+		[TestMethod]
+		public void TestIdentity()
+		{
+			DenseMatrix mat1 = Transformations.GetRotMatrixX(Math.PI) * Transformations.GetRotMatrixZ(Math.PI / 2) * Transformations.GetTranslationMatrix(123, 13, 4235);
+			var res = mat1 * mat1.Inverse();
+
+			double det = res.Determinant();
+
+			Assert.IsTrue(Math.Abs(res.Determinant() - 1) < 0.000001);
+		}
 	}
 }

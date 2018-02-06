@@ -13,7 +13,7 @@ namespace Homies.SARP.Machines.Factories
 		private static KukaRobotModelFactory _kukaFactory;
 		private static ABBRobotModelFactory _abbFactory;
 
-		public static List<DHParameter> GetDhParameterForRobot(RobotModel model)
+		public static List<DHParameter> GetDhParameterForRobot(RobotModels model)
 		{
 
 			if (!_factoriesInitialized)
@@ -27,16 +27,16 @@ namespace Homies.SARP.Machines.Factories
 			//TODO: Implement other robot models
 			switch (model)
 			{
-				case RobotModel.Kuka_KR300_R2500:
+				case RobotModels.Kuka_KR300_R2500:
 					throw new NotImplementedException();
 					break;
-				case RobotModel.Kuka_KR270_R2700:
+				case RobotModels.Kuka_KR270_R2700:
 					parameter = KukaRobotModelFactory.GetDHForKR270R2700();
 					break;
-				case RobotModel.Kuka_KR240_R2900:
+				case RobotModels.Kuka_KR240_R2900:
 					throw new NotImplementedException();
 					break;
-				case RobotModel.Kuka_KR210_R3100:
+				case RobotModels.Kuka_KR210_R3100:
 					throw new NotImplementedException();
 					break;
 				default:
