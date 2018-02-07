@@ -26,20 +26,23 @@ namespace Homies.SARP.Machines.Factories
 			switch (model)
 			{
 				case RobotModel.Kuka_KR300_R2500:
-					parameter = _kukaFactory.GetDhForKR300R2500();
 					break;
 				case RobotModel.Kuka_KR270_R2700:
-					parameter = _kukaFactory.GetDhForKR270R2700();
 					break;
 				case RobotModel.Kuka_KR240_R2900:
-					parameter = _kukaFactory.GetDhForKR240R2900();
 					break;
 				case RobotModel.Kuka_KR210_R3100:
-					parameter = _kukaFactory.GetDhForKR210R3100();
 					break;
 				default:
 					break;
 			}
+
+			parameter.Add(new DHParameter(0, 0, 0, 0));
+			parameter.Add(new DHParameter(0, 0, 0, 0));
+			parameter.Add(new DHParameter(0, 0, 0, 0));
+			parameter.Add(new DHParameter(0, 0, 0, 0));
+			parameter.Add(new DHParameter(0, 0, 0, 0));
+			parameter.Add(new DHParameter(0, 0, 0, 0));
 
 			return parameter;
 		}

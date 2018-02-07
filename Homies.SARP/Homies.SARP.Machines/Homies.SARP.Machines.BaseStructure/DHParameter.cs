@@ -49,7 +49,7 @@ namespace Homies.SARP.Machines.BaseStructure
 
 
 
-		public DHParameter(double alpha, double a, double theta, double d)
+		public DHParameter(double a, double d, double alpha, double theta)
 		{
 			A = a;
 			D = d;
