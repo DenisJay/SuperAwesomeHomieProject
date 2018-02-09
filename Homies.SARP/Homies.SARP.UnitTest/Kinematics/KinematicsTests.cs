@@ -43,6 +43,23 @@ namespace Homies.SARP.UnitTest.Kinematics
 		}
 
 		[TestMethod]
+		public void CheckDHParameterValuesWristDownConfig()
+		{
+			List<TransformationMatrix> matrices = new List<TransformationMatrix>();
+			DenseMatrix resMatrix = DenseMatrix.CreateIdentity(4);
+			var terminalMatrix = new TransformationMatrix();
+
+			resMatrix = GetTerminalFrameFor(new List<double>() { 0, -Math.PI / 2, 0, 0, Math.PI / 2, Math.PI / 2 });
+
+			terminalMatrix.DenseMatrix = resMatrix;
+			Debug.Print("\n" + resMatrix.ToString());
+
+			Assert.IsTrue(terminalMatrix.Matrix3D.OffsetX == (1790-240) &&
+				terminalMatrix.Matrix3D.OffsetY == 0 &&
+				terminalMatrix.Matrix3D.OffsetZ == (1784-240));
+		}
+
+		[TestMethod]
 		public void CheckDHParameterValuesA1_90()
 		{
 			List<TransformationMatrix> matrices = new List<TransformationMatrix>();

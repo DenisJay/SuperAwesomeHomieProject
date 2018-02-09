@@ -18,7 +18,7 @@ namespace Homies.SARP.Machines.Factories
 			parameter.Add(new DHParameter(0, 1150, 0, 0));
 			parameter.Add(new DHParameter(Math.PI / 2, -41, 0, -1200));
 			parameter.Add(new DHParameter(-Math.PI / 2, 0, 0, 0));
-			parameter.Add(new DHParameter(Math.PI / 2, 0, 0, 0));
+			parameter.Add(new DHParameter(Math.PI / 2, 0, 0, -240));
 
 			return parameter;
 		}
