@@ -37,8 +37,7 @@ namespace Homies.SARP.Kinematics.Homies.SARP.Kinematics.Forward
 
             JointCollection = new SortedList<int, Joint>();
 
-			//TODO: watch out for the < instead of the <= sign
-            for (var i = 0; i < joints.Count() - 1; i++)
+            for (var i = 0; i < joints.Count; i++)
             {
                 JointCollection.Add(i, joints.ElementAt(i));
             }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Homies.SARP.Machines.Factories
 {
-	public enum RobotModel
+	public enum RobotModels
 	{
 		Kuka_KR300_R2500,
 		Kuka_KR270_R2700,
