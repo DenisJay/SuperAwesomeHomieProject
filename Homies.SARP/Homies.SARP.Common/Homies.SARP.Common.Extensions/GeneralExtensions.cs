@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Homies.SARP.UnitTest.Extensions
+namespace Homies.SARP.Common.Extensions
 {
 
     public static class GeneralExtensions
@@ -30,5 +30,13 @@ namespace Homies.SARP.UnitTest.Extensions
             return !IsAFreaking<T>(obj);
         }
 
+		public static bool DoubleEquals(this double val1, double val2)
+		{
+			if (Math.Abs(val1 - val2) < 0.0001)
+			{
+				return true;
+			}
+			return false;
+		}
     }
 }

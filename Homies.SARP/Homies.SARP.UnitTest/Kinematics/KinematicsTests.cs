@@ -8,6 +8,7 @@ using Homies.SARP.Machines.Factories;
 using Homies.SARP.Mathematics.Transformations;
 using MathNet.Numerics.LinearAlgebra.Double;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Homies.SARP.Common.Extensions;
 
 namespace Homies.SARP.UnitTest.Kinematics
 {
@@ -37,9 +38,10 @@ namespace Homies.SARP.UnitTest.Kinematics
 			terminalMatrix.DenseMatrix = resMatrix;
 			Debug.Print("\n" + resMatrix.ToString());
 
-			Assert.IsTrue(terminalMatrix.Matrix3D.OffsetX == 1790 &&
-				terminalMatrix.Matrix3D.OffsetY == 0 &&
-				terminalMatrix.Matrix3D.OffsetZ == 1784);
+			Assert.IsTrue(
+				terminalMatrix.Matrix3D.OffsetX.DoubleEquals(1790) &&
+				terminalMatrix.Matrix3D.OffsetY.DoubleEquals(0) &&
+				terminalMatrix.Matrix3D.OffsetZ.DoubleEquals(1784));
 		}
 
 		[TestMethod]
@@ -54,9 +56,9 @@ namespace Homies.SARP.UnitTest.Kinematics
 			terminalMatrix.DenseMatrix = resMatrix;
 			Debug.Print("\n" + resMatrix.ToString());
 
-			Assert.IsTrue(terminalMatrix.Matrix3D.OffsetX == (1790-240) &&
-				terminalMatrix.Matrix3D.OffsetY == 0 &&
-				terminalMatrix.Matrix3D.OffsetZ == (1784-240));
+			Assert.IsTrue(terminalMatrix.Matrix3D.OffsetX.DoubleEquals(1790-240) &&
+				terminalMatrix.Matrix3D.OffsetY.DoubleEquals(0) &&
+				terminalMatrix.Matrix3D.OffsetZ.DoubleEquals(1784-240));
 		}
 
 		[TestMethod]
@@ -71,9 +73,27 @@ namespace Homies.SARP.UnitTest.Kinematics
 			terminalMatrix.DenseMatrix = resMatrix;
 			Debug.Print("\n" + resMatrix.ToString());
 
-			Assert.IsTrue(terminalMatrix.Matrix3D.OffsetX == 0 &&
-				terminalMatrix.Matrix3D.OffsetY == -1790 &&
-				terminalMatrix.Matrix3D.OffsetZ == 1784);
+			Assert.IsTrue(terminalMatrix.Matrix3D.OffsetX.DoubleEquals(0) &&
+				terminalMatrix.Matrix3D.OffsetY.DoubleEquals(-1790) &&
+				terminalMatrix.Matrix3D.OffsetZ.DoubleEquals(1784));
+		}
+
+		[TestMethod]
+		public void CheckDHParameterValuesA1_45()
+		{
+			List<TransformationMatrix> matrices = new List<TransformationMatrix>();
+			DenseMatrix resMatrix = DenseMatrix.CreateIdentity(4);
+			var terminalMatrix = new TransformationMatrix();
+
+			resMatrix = GetTerminalFrameFor(new List<double>() { Math.PI / 4, -Math.PI / 2, 0, 0, 0, 0 });
+
+			terminalMatrix.DenseMatrix = resMatrix;
+			Debug.Print("\n" + resMatrix.ToString());
+
+			Assert.IsTrue(
+				terminalMatrix.Matrix3D.OffsetX.DoubleEquals(Math.Sin(Math.PI / 4) * 1790) &&
+				terminalMatrix.Matrix3D.OffsetY.DoubleEquals(Math.Sin(Math.PI / 4) * -1790) &&
+				terminalMatrix.Matrix3D.OffsetZ.DoubleEquals(1784));
 		}
 
 		[TestMethod]
@@ -88,9 +108,9 @@ namespace Homies.SARP.UnitTest.Kinematics
 			terminalMatrix.DenseMatrix = resMatrix;
 			Debug.Print("\n" + resMatrix.ToString());
 
-			Assert.IsTrue(terminalMatrix.Matrix3D.OffsetX == 2940 &&
-				terminalMatrix.Matrix3D.OffsetY == 0 &&
-				terminalMatrix.Matrix3D.OffsetZ == 634);
+			Assert.IsTrue(terminalMatrix.Matrix3D.OffsetX.DoubleEquals(2940) &&
+				terminalMatrix.Matrix3D.OffsetY.DoubleEquals(0) &&
+				terminalMatrix.Matrix3D.OffsetZ.DoubleEquals(634));
 		}
 
 		[TestMethod]
@@ -105,9 +125,9 @@ namespace Homies.SARP.UnitTest.Kinematics
 			terminalMatrix.DenseMatrix = resMatrix;
 			Debug.Print("\n" + resMatrix.ToString());
 
-			Assert.IsTrue(terminalMatrix.Matrix3D.OffsetX == 1550 &&
-				terminalMatrix.Matrix3D.OffsetY == -240 &&
-				terminalMatrix.Matrix3D.OffsetZ == 1784);
+			Assert.IsTrue(terminalMatrix.Matrix3D.OffsetX.DoubleEquals(1550) &&
+				terminalMatrix.Matrix3D.OffsetY.DoubleEquals(-240) &&
+				terminalMatrix.Matrix3D.OffsetZ.DoubleEquals(1784));
 		}
 
 		#endregion

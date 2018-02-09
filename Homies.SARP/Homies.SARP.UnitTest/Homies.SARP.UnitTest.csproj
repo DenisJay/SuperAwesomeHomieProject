@@ -52,7 +52,6 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions\GeneralExtensions.cs" />
     <Compile Include="Kinematics\InverseKinematicsTest.cs" />
     <Compile Include="Kinematics\KinematicsTests.cs" />
     <Compile Include="Mathematics\MatrixTests.cs" />
@@ -65,6 +64,10 @@
     <Folder Include="Machines\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Homies.SARP.Common\Homies.SARP.Common.csproj">
+      <Project>{87913ab1-e243-47b7-aa75-e1a0df960ba6}</Project>
+      <Name>Homies.SARP.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Homies.SARP.Kinematics\Homies.SARP.Kinematics.csproj">
       <Project>{bff9f5e1-0cc3-4a02-973c-7286e76ddc51}</Project>
       <Name>Homies.SARP.Kinematics</Name>
