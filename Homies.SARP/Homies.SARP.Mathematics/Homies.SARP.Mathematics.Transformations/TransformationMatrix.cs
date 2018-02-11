@@ -108,7 +108,7 @@ namespace Homies.SARP.Mathematics.Transformations
 
         public override bool Equals(object obj)
         {
-			var mat = obj as TransformationMatrix;
+            var mat = obj as TransformationMatrix;
             if (mat != null)
             {
                 return DenseMatrix.Equals(mat.DenseMatrix);
@@ -117,8 +117,6 @@ namespace Homies.SARP.Mathematics.Transformations
             return false;
         }
 
-        //TODO: Der override ist überflüssig, wenn nur base aufgerufen wird, oder?
-        //der meckert bei mir, wenn man einen override fuer Equals hat, dass man auch einen für GetHashCode braucht
         public override int GetHashCode()
         {
             return base.GetHashCode();

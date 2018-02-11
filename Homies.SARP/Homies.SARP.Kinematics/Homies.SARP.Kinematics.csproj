@@ -57,6 +57,10 @@
     <Folder Include="Homies.SARP.Kinematics.Enums\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Homies.SARP.Common\Homies.SARP.Common.csproj">
+      <Project>{87913ab1-e243-47b7-aa75-e1a0df960ba6}</Project>
+      <Name>Homies.SARP.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Homies.SARP.Machines\Homies.SARP.Machines.csproj">
       <Project>{10bf2d83-0333-4090-bdd3-e62afd1b9229}</Project>
       <Name>Homies.SARP.Machines</Name>

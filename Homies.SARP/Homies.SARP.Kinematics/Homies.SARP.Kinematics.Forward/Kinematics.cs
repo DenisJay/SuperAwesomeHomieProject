@@ -1,12 +1,8 @@
 ﻿using System;
-using System.CodeDom;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media.Media3D;
+using Homies.SARP.Common.Homies.SARP.Common.Extensions;
 using Homies.SARP.Machines.BaseStructure;
 
 namespace Homies.SARP.Kinematics.Homies.SARP.Kinematics.Forward
@@ -53,34 +49,42 @@ namespace Homies.SARP.Kinematics.Homies.SARP.Kinematics.Forward
         /// </summary>
         public Matrix3D GetForwardTransformationMatrix()
         {
-            var zAxisBase = new Vector3D(0, 0, 1);
-            var xAxisBase = new Vector3D(1, 0, 0);
+            var zAxis = new Vector3D(0, 0, 1);
+            var xAxis = new Vector3D(1, 0, 0);
 
             var transformGroup = new Transform3DGroup();
 
-            for (int i = 0; i < JointCollection.Count - 1; i++)
+            for (int i = 0; i < JointCollection.Count; i++)
             {
                 var currentJoint = JointCollection[i];
 
-                //Drehen um X
-                var alphaRotate = new RotateTransform3D(new AxisAngleRotation3D(xAxisBase, currentJoint.DhParameter.Alpha));
-                //Translation
-                var translate = new TranslateTransform3D(currentJoint.DhParameter.A, 0, currentJoint.DhParameter.D);
-                //Rotation around the joint-axis
-                var thetaRotate = new RotateTransform3D(new AxisAngleRotation3D(zAxisBase, currentJoint.DhParameter.Theta));
+                zAxis = transformGroup.Value.ZAxis();
+                zAxis.Normalize();
+                
+                //Translation in Z
+                var zTranslate = new TranslateTransform3D(zAxis * currentJoint.DhParameter.D);
+                //Rotation around the z-Axis
+                var thetaRotate = new RotateTransform3D(new AxisAngleRotation3D(zAxis, currentJoint.DhParameter.Theta * 180 / Math.PI));
 
+                transformGroup.Children.Insert(0, zTranslate);
+                transformGroup.Children.Insert(1, thetaRotate);
+
+                xAxis = transformGroup.Value.XAxis();
+                xAxis.Normalize();
+
+                //Translation in X
+                var xTranslate = new TranslateTransform3D(xAxis * currentJoint.DhParameter.A);
+                //Rotation around X
+                var alphaRotate = new RotateTransform3D(new AxisAngleRotation3D(xAxis, currentJoint.DhParameter.Alpha * 180 / Math.PI));
+
+                //Alpha Rotation has to be first, as the x-Axis 
                 transformGroup.Children.Insert(0, alphaRotate);
-                transformGroup.Children.Insert(1, translate);
-                transformGroup.Children.Insert(2, thetaRotate);
+                transformGroup.Children.Insert(1, xTranslate);
 
-                //transformGroup.Children.Add(alphaRotate);
-                //transformGroup.Children.Add(translate);
-                //transformGroup.Children.Add(thetaRotate);
             }
 
             return transformGroup.Value;
         }
-
 
         #endregion
 

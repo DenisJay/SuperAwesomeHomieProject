@@ -4,6 +4,7 @@ using Homies.SARP.Mathematics.Transformations;
 using MathNet.Numerics.LinearAlgebra.Double;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MathNet.Numerics.LinearAlgebra;
+using Homies.SARP.Common.Extensions;
 
 namespace Homies.SARP.UnitTest.Mathematics
 {
@@ -55,12 +56,10 @@ namespace Homies.SARP.UnitTest.Mathematics
 			Point3D pointResult3D = _testRotationMatrix.Matrix3D.Transform(_testPoint3D);
 			Vector<double> pointResultDense = _testRotationMatrix.DenseMatrix * _testPoint;
 
-			//TODO: Numeric number comparison should be in the form of "Math.Abs(value1-value2) < 0.0000001"
-			// maybe as extension method for double / decimal?
 			Assert.IsTrue(
-				pointResult3D.X == pointResultDense[0] && 
-				pointResult3D.Y == pointResultDense[1] && 
-				pointResult3D.Z == pointResultDense[2]);
+                pointResult3D.X.DoubleEquals(pointResultDense[0]) &&
+				pointResult3D.Y.DoubleEquals(pointResultDense[1]) && 
+				pointResult3D.Z.DoubleEquals(pointResultDense[2]));
 		}
 
 		[TestMethod]
@@ -70,9 +69,9 @@ namespace Homies.SARP.UnitTest.Mathematics
 			Vector<double> pointResultDense = _testTranslationMatrix.DenseMatrix * _testPoint;
 
 			Assert.IsTrue(
-				pointResult3D.X == pointResultDense[0] &&
-				pointResult3D.Y == pointResultDense[1] &&
-				pointResult3D.Z == pointResultDense[2]);
+				pointResult3D.X.DoubleEquals(pointResultDense[0]) &&
+				pointResult3D.Y.DoubleEquals(pointResultDense[1]) &&
+				pointResult3D.Z.DoubleEquals(pointResultDense[2]));
 		}
 
 		[TestMethod]
@@ -85,9 +84,9 @@ namespace Homies.SARP.UnitTest.Mathematics
 			Vector<double> pointResultDense = _testRotationMatrix.DenseMatrix * _testPoint;
 
 			Assert.IsTrue(
-				pointResult3D.X == pointResultDense[0] &&
-				pointResult3D.Y == pointResultDense[1] &&
-				pointResult3D.Z == pointResultDense[2]);
+				pointResult3D.X.DoubleEquals(pointResultDense[0]) &&
+				pointResult3D.Y.DoubleEquals(pointResultDense[1]) &&
+				pointResult3D.Z.DoubleEquals(pointResultDense[2]));
 		}
 
 		[TestMethod]
@@ -100,9 +99,9 @@ namespace Homies.SARP.UnitTest.Mathematics
 			Vector<double> pointResultDense = _testTranslationMatrix.DenseMatrix * _testPoint;
 
 			Assert.IsTrue(
-				pointResult3D.X == pointResultDense[0] &&
-				pointResult3D.Y == pointResultDense[1] &&
-				pointResult3D.Z == pointResultDense[2]);
+				pointResult3D.X.DoubleEquals(pointResultDense[0]) &&
+				pointResult3D.Y.DoubleEquals(pointResultDense[1]) &&
+				pointResult3D.Z.DoubleEquals(pointResultDense[2]));
 		}
 
 

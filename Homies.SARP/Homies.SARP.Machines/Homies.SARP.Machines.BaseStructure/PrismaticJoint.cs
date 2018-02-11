@@ -21,7 +21,8 @@ namespace Homies.SARP.Machines.BaseStructure
 
         #region Construct
 
-        public PrismaticJoint(double motionMin, double motionMax, DHParameter dhParam) : base(motionMin, motionMax, dhParam)
+        //TODO: Abgleichen, ob DH Parameter min unter-, oder max überschreiten
+        public PrismaticJoint(double motionMinInMillimeters, double motionMaxInMillimeters, DHParameter dhParam) : base(motionMinInMillimeters, motionMaxInMillimeters, dhParam)
         {
 
         }

@@ -10,6 +10,15 @@ namespace Homies.SARP.Common.Extensions
 
     public static class GeneralExtensions
     {
+
+        #region Const
+
+        // Wenn ich Tolerance = 1/10000 schreibe, ist es 0. Wieso ist das so?
+        const double Tolerance = 0.0001;
+
+        #endregion
+
+
         /// <summary>
         /// Returns true, if the object is of the specified type.
         /// </summary>
@@ -30,13 +39,17 @@ namespace Homies.SARP.Common.Extensions
             return !IsAFreaking<T>(obj);
         }
 
-		public static bool DoubleEquals(this double val1, double val2)
-		{
-			if (Math.Abs(val1 - val2) < 0.0001)
-			{
-				return true;
-			}
-			return false;
-		}
+        public static bool DoubleEquals(this double val1, double val2)
+        {
+            const double tolerance = 0.0001;
+
+            if (Math.Abs(val1 - val2) < tolerance)
+            {
+                return true;
+            }
+
+            return false;
+
+        }
     }
 }

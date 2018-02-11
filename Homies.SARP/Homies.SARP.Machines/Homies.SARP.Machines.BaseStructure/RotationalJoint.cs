@@ -18,7 +18,8 @@ namespace Homies.SARP.Machines.BaseStructure
 
         #region Construct
 
-        public RotationalJoint(double motionMin, double motionMax, DHParameter dhParam) : base(motionMin, motionMax, dhParam)
+        //TODO: Abgleichen, ob DH Parameter min unter-, oder max überschreiten
+        public RotationalJoint(double motionMinInRad, double motionMaxInRad, DHParameter dhParam) : base(motionMinInRad, motionMaxInRad, dhParam)
         {
 
         }

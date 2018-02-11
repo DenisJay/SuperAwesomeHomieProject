@@ -8,34 +8,49 @@ using System.Text;
 
 namespace Homies.SARP.Machines.MachineStructures
 {
-	public class Robot
-	{
-		string _modelName;
-		SortedList<int, Joint> _joints;
+    //TODO: Sollte so ein Robot nicht RobotKinematics erben/haben?
+    //Wegen einer Ringabhängigkeit kann Machines aber kein Verweis auf Kinematics gegeben werden...
+    public class Robot
+    {
+        string _modelName;
+        SortedList<int, Joint> _joints;
 
-		public string ModelName
-		{
-			get { return _modelName; }
-			set { _modelName = value; }
-		}
+        public Robot(string name, List<DHParameter> dhParam)
+        {
+            ModelName = name;
+            Joints = new SortedList<int, Joint>();
 
-		public SortedList<int, Joint> Joints
-		{
-			get { return _joints; }
-			set { _joints = value; }
-		}
+            for (int i = 0; i < dhParam.Count; i++)
+            {
+                Joints.Add(i, new RotationalJoint(0, 360, dhParam[i]));
+            }
+        }
 
-		public TransformationMatrix TCP { get; set; }
+        public Robot(string name, List<Joint> joints)
+        {
+            ModelName = name;
+            Joints = new SortedList<int, Joint>();
 
-		public Robot(string name, List<DHParameter> dhParam)
-		{
-			Joints = new SortedList<int, Joint>();
-			ModelName = name;
+            for (int i = 0; i < joints.Count; i++)
+            {
+                Joints.Add(i, joints[i]);
+            }
 
-			for (int i = 0; i < dhParam.Count; i++)
-			{
-				Joints.Add(i, new RotationalJoint(0, 360, dhParam[i]));
-			}
-		}
-	}
+        }
+
+        public string ModelName
+        {
+            get { return _modelName; }
+            set { _modelName = value; }
+        }
+
+        public TransformationMatrix TCP { get; set; }
+
+        public SortedList<int, Joint> Joints
+        {
+            get { return _joints; }
+            set { _joints = value; }
+        }
+
+    }
 }

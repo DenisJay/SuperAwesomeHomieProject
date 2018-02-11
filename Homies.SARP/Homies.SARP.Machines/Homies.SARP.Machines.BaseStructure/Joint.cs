@@ -1,9 +1,5 @@
 ﻿using Homies.SARP.Mathematics.Transformations;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
+using System.Windows.Media.Media3D;
 
 namespace Homies.SARP.Machines.BaseStructure
 {
@@ -41,11 +37,11 @@ namespace Homies.SARP.Machines.BaseStructure
 
         public readonly double MotionMaximum;
 
-		public TransformationMatrix jointTransformation
-		{
-			get { return DhParameter.GetJointTransformation(); }
-		}
+        public TransformationMatrix jointTransformation
+        {
+            get { return DhParameter.GetJointTransformation(); }
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }
