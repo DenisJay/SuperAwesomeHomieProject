@@ -1,19 +1,14 @@
-﻿using Homies.SARP.Machines.BaseStructure;
+﻿using Homies.SARP.Kinematics.Common;
 using Homies.SARP.Mathematics.Transformations;
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Homies.SARP.Kinematics.Forward
 {
 	public interface IForwardKinematics
 	{
-		TransformationMatrix GetTerminalFrame(List<Joint> joints);
-		TransformationMatrix GetTerminalFrame(List<Joint> joints, List<double> jointValues);
-		int GetStatus(List<Joint> joints, List<double> jointValues);
-		int GetTurn(List<Joint> joints, List<double> jointValues);
+		TransformationMatrix GetTerminalFrame(List<DHParameter> joints);
+		TransformationMatrix GetTerminalFrame(List<DHParameter> joints, List<double> jointValues);
+		int GetStatus(List<DHParameter> joints, List<double> jointValues);
+		int GetTurn(List<DHParameter> joints, List<double> jointValues);
 	}
 }

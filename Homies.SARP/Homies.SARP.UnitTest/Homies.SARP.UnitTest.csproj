@@ -52,8 +52,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Kinematics\InverseKinematicsTest.cs" />
-    <Compile Include="Kinematics\KinematicsTests.cs" />
+    <Compile Include="KinematicsTest\InverseKinematicsTest.cs" />
+    <Compile Include="KinematicsTest\KinematicsTests.cs" />
     <Compile Include="Machines\SixAxisKinematicMemberTest.cs" />
     <Compile Include="Mathematics\MatrixTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

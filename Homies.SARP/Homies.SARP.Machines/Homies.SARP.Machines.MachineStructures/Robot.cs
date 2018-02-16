@@ -1,59 +1,44 @@
-﻿using Homies.SARP.Machines.BaseStructure;
-using Homies.SARP.Mathematics.Transformations;
-using MathNet.Numerics.LinearAlgebra.Double;
-using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using MathNet.Numerics.LinearAlgebra.Double;
+using Homies.SARP.Machines.BaseStructure;
+using Homies.SARP.Mathematics.Transformations;
+using Homies.SARP.Kinematics.Common;
 
 namespace Homies.SARP.Machines.MachineStructures
 {
-    //TODO: Sollte so ein Robot nicht RobotKinematics erben/haben?
-    //Wegen einer Ringabhängigkeit kann Machines aber kein Verweis auf Kinematics gegeben werden...
-    public class Robot
+	//TODO: Sollte so ein Robot nicht RobotKinematics erben/haben?
+	//Wegen einer Ringabhängigkeit kann Machines aber kein Verweis auf Kinematics gegeben werden...
+	public class Robot
     {
-        string _modelName;
-        SortedList<int, Joint> _joints;
+
+		#region FIELDS
+
+		string _modelName;
+		SortedList<int, Joint> _joints;
 		TransformationMatrix _currentTarget;
 		TransformationMatrix _currentWristFrame;
+		#endregion //FIELDS
 
-        public Robot(string name, List<DHParameter> dhParam)
-        {
-            ModelName = name;
-            Joints = new SortedList<int, Joint>();
+		#region PROPERTIES
 
-            for (int i = 0; i < dhParam.Count; i++)
-            {
-                Joints.Add(i, new RotationalJoint(0, 360, dhParam[i]));
-            }
-        }
+		public string ModelName
+		{
+			get { return _modelName; }
+			set { _modelName = value; }
+		}
 
-        public Robot(string name, List<Joint> joints)
-        {
-            ModelName = name;
-            Joints = new SortedList<int, Joint>();
+		public TransformationMatrix FlangeToTCP
+		{
+			get;
+			set;
+		}
 
-            for (int i = 0; i < joints.Count; i++)
-            {
-                Joints.Add(i, joints[i]);
-            }
-
-        }
-
-        public string ModelName
-        {
-            get { return _modelName; }
-            set { _modelName = value; }
-        }
-
-        public TransformationMatrix FlangeToTCP { get; set; }
-
-        public SortedList<int, Joint> Joints
-        {
-            get { return _joints; }
-            set { _joints = value; }
-        }
+		public SortedList<int, Joint> Joints
+		{
+			get { return _joints; }
+			set { _joints = value; }
+		}
 
 		public TransformationMatrix CurrentTarget
 		{
@@ -61,6 +46,10 @@ namespace Homies.SARP.Machines.MachineStructures
 			{
 				ComputeCurrentTarget();
 				return _currentTarget;
+			}
+			private set
+			{
+				_currentTarget = value;
 			}
 		}
 
@@ -71,20 +60,54 @@ namespace Homies.SARP.Machines.MachineStructures
 				ComputeCurrentWristFrame();
 				return _currentWristFrame;
 			}
+			private set
+			{
+				_currentWristFrame = value;
+			}
 		}
+
+		#endregion //PROPERTIES
+
+		#region INITIALIZATION
+
+		public Robot(string name, List<DHParameter> dhParam)
+		{
+			ModelName = name;
+			Joints = new SortedList<int, Joint>();
+
+			for (int i = 0; i < dhParam.Count; i++)
+			{
+				Joints.Add(i, new RotationalJoint(0, 360, dhParam[i]));
+			}
+		}
+
+		public Robot(string name, List<Joint> joints)
+		{
+			ModelName = name;
+			Joints = new SortedList<int, Joint>();
+
+			for (int i = 0; i < joints.Count; i++)
+			{
+				Joints.Add(i, joints[i]);
+			}
+		}
+
+		#endregion //INITIALIZATION
+
+		#region METHODS
 
 		private void ComputeCurrentWristFrame()
 		{
 			DenseMatrix wrist = (DenseMatrix)Joints.Last().Value.JointTransformation.DenseMatrix.Inverse() * CurrentTarget.DenseMatrix;
 
-			if (_currentWristFrame == null)
+			if (CurrentWristFrame == null)
 			{
-				_currentWristFrame = new TransformationMatrix(wrist);
+				CurrentWristFrame = new TransformationMatrix(wrist);
 			}
 			else
 			{
-				_currentWristFrame.DenseMatrix = wrist;
-            }
+				CurrentWristFrame.DenseMatrix = wrist;
+			}
 		}
 
 		private void ComputeCurrentTarget()
@@ -96,7 +119,10 @@ namespace Homies.SARP.Machines.MachineStructures
 				target.DenseMatrix *= joint.Value.JointTransformation.DenseMatrix;
 			}
 
-			_currentTarget = target;
+			CurrentTarget = target;
 		}
+
+		#endregion //METHODS
+
 	}
 }

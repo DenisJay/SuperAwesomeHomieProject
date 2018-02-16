@@ -46,7 +46,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Homies.SARP.Machines.BaseStructure\DHParameter.cs" />
     <Compile Include="Homies.SARP.Machines.BaseStructure\Joint.cs" />
     <Compile Include="Homies.SARP.Machines.BaseStructure\PrismaticJoint.cs" />
     <Compile Include="Homies.SARP.Machines.BaseStructure\RotationalJoint.cs" />
@@ -58,6 +57,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Homies.SARP.Kinematics\Homies.SARP.Kinematics.csproj">
+      <Project>{bff9f5e1-0cc3-4a02-973c-7286e76ddc51}</Project>
+      <Name>Homies.SARP.Kinematics</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Homies.SARP.Mathematics\Homies.SARP.Mathematics.csproj">
       <Project>{6cf733a3-4854-4550-aa38-cf8f378c8f29}</Project>
       <Name>Homies.SARP.Mathematics</Name>

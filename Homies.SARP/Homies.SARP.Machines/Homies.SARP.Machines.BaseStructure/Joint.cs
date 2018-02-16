@@ -1,4 +1,5 @@
-﻿using Homies.SARP.Mathematics.Transformations;
+﻿using Homies.SARP.Kinematics.Common;
+using Homies.SARP.Mathematics.Transformations;
 using System.Windows.Media.Media3D;
 
 namespace Homies.SARP.Machines.BaseStructure
@@ -27,6 +28,18 @@ namespace Homies.SARP.Machines.BaseStructure
 
         #region Methods
 
+		protected bool JointValueInRange(double jointValue)
+		{
+			if (jointValue < MotionMinimum && jointValue > MotionMinimum)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
         #endregion
 
         #region Properties
@@ -39,9 +52,11 @@ namespace Homies.SARP.Machines.BaseStructure
 
         public TransformationMatrix JointTransformation
         {
-            get { return DhParameter.GetJointTransformation(); }
+            get { return DhParameter.JointTransform; }
         }
 
-        #endregion
-    }
+		public abstract double JointValue { get; set; }
+
+		#endregion
+	}
 }

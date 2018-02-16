@@ -23,7 +23,7 @@ namespace Homies.SARP.Mathematics.Transformations
 			rotX.CoerceZero(0.000001);
 			return rotX;
 		}
-
+		
 		/// <summary>
 		/// Returns a rotation matrix rotated around the y axis
 		/// </summary>

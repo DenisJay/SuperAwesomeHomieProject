@@ -1,4 +1,5 @@
-﻿using Homies.SARP.Machines.BaseStructure;
+﻿using Homies.SARP.Kinematics.Common;
+using Homies.SARP.Machines.BaseStructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;

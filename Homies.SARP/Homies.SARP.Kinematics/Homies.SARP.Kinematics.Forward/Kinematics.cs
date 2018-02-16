@@ -3,41 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Media.Media3D;
 using Homies.SARP.Common.Homies.SARP.Common.Extensions;
-using Homies.SARP.Machines.BaseStructure;
+using Homies.SARP.Mathematics.Transformations;
+using Homies.SARP.Kinematics.Common;
+using MathNet.Numerics.LinearAlgebra.Double;
 
-namespace Homies.SARP.Kinematics.Homies.SARP.Kinematics.Forward
+namespace Homies.SARP.Kinematics.Forward
 {
-    public abstract class Kinematics
+    public abstract class Kinematics : IForwardKinematics
     {
-
-        #region Constants
-
-
-
-        #endregion
-
-        #region Attributes
-
-
-        #endregion
-
         #region Construct
 
-        protected Kinematics(IReadOnlyCollection<Joint> joints)
+        protected Kinematics(IReadOnlyCollection<DHParameter> dhParameter)
         {
             //A kinematic with no joints is invalid.
-            if (joints == null || !joints.Any())
+            if (dhParameter == null || !dhParameter.Any())
             {
-                throw new ArgumentNullException(nameof(joints));
+                throw new ArgumentNullException(nameof(dhParameter));
             }
 
-            JointCollection = new SortedList<int, Joint>();
+			DhParameterCollection = new SortedList<int, DHParameter>();
 
-            for (var i = 0; i < joints.Count; i++)
+            for (var i = 0; i < dhParameter.Count; i++)
             {
-                JointCollection.Add(i, joints.ElementAt(i));
+				DhParameterCollection.Add(i, dhParameter.ElementAt(i));
             }
-
         }
 
         #endregion
@@ -54,17 +43,17 @@ namespace Homies.SARP.Kinematics.Homies.SARP.Kinematics.Forward
 
             var transformGroup = new Transform3DGroup();
 
-            for (int i = 0; i < JointCollection.Count; i++)
+            for (int i = 0; i < DhParameterCollection.Count; i++)
             {
-                var currentJoint = JointCollection[i];
+                var curretDHParameter = DhParameterCollection[i];
 
                 zAxis = transformGroup.Value.ZAxis();
                 zAxis.Normalize();
                 
                 //Translation in Z
-                var zTranslate = new TranslateTransform3D(zAxis * currentJoint.DhParameter.D);
+                var zTranslate = new TranslateTransform3D(zAxis * curretDHParameter.D);
                 //Rotation around the z-Axis
-                var thetaRotate = new RotateTransform3D(new AxisAngleRotation3D(zAxis, currentJoint.DhParameter.Theta * 180 / Math.PI));
+                var thetaRotate = new RotateTransform3D(new AxisAngleRotation3D(zAxis, curretDHParameter.Theta * 180 / Math.PI));
 
                 transformGroup.Children.Insert(0, zTranslate);
                 transformGroup.Children.Insert(1, thetaRotate);
@@ -73,9 +62,9 @@ namespace Homies.SARP.Kinematics.Homies.SARP.Kinematics.Forward
                 xAxis.Normalize();
 
                 //Translation in X
-                var xTranslate = new TranslateTransform3D(xAxis * currentJoint.DhParameter.A);
+                var xTranslate = new TranslateTransform3D(xAxis * curretDHParameter.A);
                 //Rotation around X
-                var alphaRotate = new RotateTransform3D(new AxisAngleRotation3D(xAxis, currentJoint.DhParameter.Alpha * 180 / Math.PI));
+                var alphaRotate = new RotateTransform3D(new AxisAngleRotation3D(xAxis, curretDHParameter.Alpha * 180 / Math.PI));
 
                 //Alpha Rotation has to be first, as the x-Axis 
                 transformGroup.Children.Insert(0, alphaRotate);
@@ -86,11 +75,45 @@ namespace Homies.SARP.Kinematics.Homies.SARP.Kinematics.Forward
             return transformGroup.Value;
         }
 
-        #endregion
+		public abstract TransformationMatrix GetTerminalFrame(List<DHParameter> joints);
+		public abstract TransformationMatrix GetTerminalFrame(List<DHParameter> joints, List<double> jointValues);
+		public abstract int GetStatus(List<DHParameter> joints, List<double> jointValues);
+		public abstract int GetTurn(List<DHParameter> joints, List<double> jointValues);
 
-        #region Properties
+		/// <summary>
+		/// Computes the terminal frame for a given kinematic chain using dh-parameter and any given axis configuration
+		/// </summary>
+		/// <param name="dhParams">Set of dh-parameter specifying the kinematic chain</param>
+		/// <param name="angles">angles specifying the configuration</param>
+		/// <returns></returns>
+		public static DenseMatrix GetTerminalFrameFor(List<DHParameter> dhParams, List<double> angles)
+		{
+			var resMatrix = DenseMatrix.CreateIdentity(4);
 
-        public readonly SortedList<int, Joint> JointCollection;
+			if (angles.Count != dhParams.Count)
+			{
+				throw new ArgumentOutOfRangeException("The number of joints and the given number of angles do not fit.");
+			}
+
+			for (int i = 0; i < dhParams.Count; i++)
+			{
+				dhParams[i].Theta = angles[i];
+
+				DenseMatrix mat = Transformations.GetRotMatrixX(dhParams[i].Alpha) *
+					Transformations.GetTranslationMatrix(dhParams[i].A, 0, 0) *
+					Transformations.GetRotMatrixZ(dhParams[i].Theta) *
+					Transformations.GetTranslationMatrix(0, 0, dhParams[i].D);
+				resMatrix *= mat;
+			}
+
+			return resMatrix;
+		}
+
+		#endregion
+
+		#region Properties
+
+		public readonly SortedList<int, DHParameter> DhParameterCollection;
 
         #endregion
 

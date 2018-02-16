@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Homies.SARP.Kinematics.Common;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -27,15 +28,27 @@ namespace Homies.SARP.Machines.BaseStructure
 
         }
 
-        #endregion
+		#endregion
 
-        #region Methods
+		#region Methods
 
-        #endregion
+		#endregion
 
-        #region Properties
+		#region Properties
 
-        #endregion
+		public override double JointValue
+		{
+			get { return this.DhParameter.D; }
+			set
+			{
+				if (JointValueInRange(value))
+				{
+					this.DhParameter.D = value;
+				}
+			}
+		}
 
-    }
+		#endregion
+
+	}
 }

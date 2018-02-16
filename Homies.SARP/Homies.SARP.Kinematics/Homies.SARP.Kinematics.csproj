@@ -45,25 +45,20 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Homies.SARP.Kinematics.Common\DHParameter.cs" />
     <Compile Include="Homies.SARP.Kinematics.Forward\IForwardKinematics.cs" />
     <Compile Include="Homies.SARP.Kinematics.Forward\Kinematics.cs" />
     <Compile Include="Homies.SARP.Kinematics.Forward\RobotKinematics.cs" />
-    <Compile Include="Homies.SARP.Kinematics.Forward\SerialChainKinematics.cs" />
     <Compile Include="Homies.SARP.Kinematics.Inverse\InverseKinematics.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Homies.SARP.Kinematics.Base\" />
     <Folder Include="Homies.SARP.Kinematics.Enums\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Homies.SARP.Common\Homies.SARP.Common.csproj">
       <Project>{87913ab1-e243-47b7-aa75-e1a0df960ba6}</Project>
       <Name>Homies.SARP.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Homies.SARP.Machines\Homies.SARP.Machines.csproj">
-      <Project>{10bf2d83-0333-4090-bdd3-e62afd1b9229}</Project>
-      <Name>Homies.SARP.Machines</Name>
     </ProjectReference>
     <ProjectReference Include="..\Homies.SARP.Mathematics\Homies.SARP.Mathematics.csproj">
       <Project>{6cf733a3-4854-4550-aa38-cf8f378c8f29}</Project>

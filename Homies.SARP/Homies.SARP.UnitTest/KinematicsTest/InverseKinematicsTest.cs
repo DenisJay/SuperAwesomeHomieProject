@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Homies.SARP.Kinematics.Homies.SARP.Kinematics.Forward;
+using Homies.SARP.Kinematics.Forward;
 using Homies.SARP.Machines.BaseStructure;
 using Homies.SARP.Machines.Factories;
 using Homies.SARP.Mathematics.Transformations;
@@ -12,7 +12,7 @@ using Homies.SARP.Machines.MachineStructures;
 using Homies.SARP.Kinematics.Homies.SARP.Kinematics.Inverse;
 using Homies.SARP.Common.Extensions;
 
-namespace Homies.SARP.UnitTest.Kinematics
+namespace Homies.SARP.UnitTest.KinematicsTest
 {
 	[TestClass]
 	public class InverseKinematicsTest
@@ -35,7 +35,7 @@ namespace Homies.SARP.UnitTest.Kinematics
             _testRobot.Joints[0].DhParameter.Theta = testAngleValue;
 			TransformationMatrix currentRobotTarget = _testRobot.CurrentTarget;
 
-			List<double> angles = _inverse.GetInverseKinematics(currentRobotTarget, _testRobot);
+			List<double> angles = _inverse.GetInverseKinematics(currentRobotTarget);
 
 			Assert.IsTrue(angles[0].DoubleEquals(testAngleValue));
 		}

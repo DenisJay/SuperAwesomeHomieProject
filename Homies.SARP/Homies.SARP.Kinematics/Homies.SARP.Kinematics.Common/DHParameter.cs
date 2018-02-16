@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Homies.SARP.Mathematics.Transformations;
 using MathNet.Numerics.LinearAlgebra.Double;
 
-namespace Homies.SARP.Machines.BaseStructure
+namespace Homies.SARP.Kinematics.Common
 {
     /// <summary>
     /// Denevit-Hartenberg Parameters define transformations inside a kinematic chain.
@@ -25,6 +25,8 @@ namespace Homies.SARP.Machines.BaseStructure
         double _d;
         double _theta;
 
+		TransformationMatrix _jointTransform;
+
         #endregion //FIELDS
 
         public DHParameter(double alpha, double a, double theta, double d)
@@ -33,30 +35,39 @@ namespace Homies.SARP.Machines.BaseStructure
             D = d;
             Alpha = alpha;
             Theta = theta;
+
+			JointTransform = new TransformationMatrix();
         }
 
-        public TransformationMatrix GetJointTransformation()
+        private void GetJointTransformation()
         {
             double ct = Math.Cos(Theta);
             double st = Math.Sin(Theta);
             double ca = Math.Cos(Alpha);
             double sa = Math.Sin(Alpha);
 
-            DenseMatrix jointTransform = DenseMatrix.OfArray(new double[,]
-                {
-                    {ct, -st*ca, st*sa, A*ct},
-                    {st, ct*ca, -ct*sa, A*st},
-                    {0, sa, ca, D},
-                    {0, 0, 0, 1}
-                });
 
-            var retTrans = new TransformationMatrix(jointTransform);
-            return retTrans;
-        }
+			_jointTransform.DenseMatrix = DenseMatrix.OfArray(new double[,]
+			{
+				{   ct,   -st,   0,     A},
+				{ca*st, ca*ct, -sa, -D*sa},
+				{sa*st, sa*ct,  ca,  D*ca},
+				{    0,     0,   0,     1}
+			});
+
+			//_jointTransform.DenseMatrix = DenseMatrix.OfArray(new double[,] 
+			//{
+			//	{ct, -st*ca, st*sa, A*ct},
+			//	{st, ct*ca, -ct*sa, A*st},
+			//	{0, sa, ca, D},
+			//	{0, 0, 0, 1}
+			//});
+		}
 
         #region PROPERTIES
 
         //TODO: Wieso sind Theta und D public settable?
+		// variable achskonfiguration
         public double Theta
         {
             get { return _theta; }
@@ -81,6 +92,16 @@ namespace Homies.SARP.Machines.BaseStructure
             set { _d = value; }
         }
 
-        #endregion //PROPERTIES
-    }
+		public TransformationMatrix JointTransform
+		{
+			get
+			{
+				GetJointTransformation();
+                return _jointTransform;
+			}
+			private set { _jointTransform = value; }
+		}
+
+		#endregion //PROPERTIES
+	}
 }
