@@ -25,7 +25,7 @@ namespace Homies.SARP.Kinematics.Common
         double _d;
         double _theta;
 
-		TransformationMatrix _jointTransform;
+		TransformationMatrix _jointTransform = new TransformationMatrix();
 
         #endregion //FIELDS
 
@@ -35,8 +35,6 @@ namespace Homies.SARP.Kinematics.Common
             D = d;
             Alpha = alpha;
             Theta = theta;
-
-			JointTransform = new TransformationMatrix();
         }
 
         private void GetJointTransformation()
@@ -46,7 +44,6 @@ namespace Homies.SARP.Kinematics.Common
             double ca = Math.Cos(Alpha);
             double sa = Math.Sin(Alpha);
 
-
 			_jointTransform.DenseMatrix = DenseMatrix.OfArray(new double[,]
 			{
 				{   ct,   -st,   0,     A},
@@ -54,14 +51,6 @@ namespace Homies.SARP.Kinematics.Common
 				{sa*st, sa*ct,  ca,  D*ca},
 				{    0,     0,   0,     1}
 			});
-
-			//_jointTransform.DenseMatrix = DenseMatrix.OfArray(new double[,] 
-			//{
-			//	{ct, -st*ca, st*sa, A*ct},
-			//	{st, ct*ca, -ct*sa, A*st},
-			//	{0, sa, ca, D},
-			//	{0, 0, 0, 1}
-			//});
 		}
 
         #region PROPERTIES
@@ -71,7 +60,7 @@ namespace Homies.SARP.Kinematics.Common
         public double Theta
         {
             get { return _theta; }
-            set { _theta = value; }
+            set { _theta = value; GetJointTransformation(); }
         }
 
         public double A

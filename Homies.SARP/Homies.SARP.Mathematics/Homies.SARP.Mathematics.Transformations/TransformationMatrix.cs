@@ -20,6 +20,7 @@ namespace Homies.SARP.Mathematics.Transformations
             set
             {
                 _denseMatrix = value;
+				_denseMatrix.CoerceZero(0.00000001);
                 UpdateMatrix3D();
             }
         }

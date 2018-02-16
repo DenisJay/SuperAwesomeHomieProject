@@ -4,6 +4,7 @@ using MathNet.Numerics.LinearAlgebra.Double;
 using Homies.SARP.Machines.BaseStructure;
 using Homies.SARP.Mathematics.Transformations;
 using Homies.SARP.Kinematics.Common;
+using System;
 
 namespace Homies.SARP.Machines.MachineStructures
 {
@@ -96,17 +97,46 @@ namespace Homies.SARP.Machines.MachineStructures
 
 		#region METHODS
 
+
+		public void SetAnglesInDegree(List<double> degreeAngles)
+		{
+			if (degreeAngles == null ||degreeAngles.Count < 1 || degreeAngles.Count > Joints.Count)
+			{
+				return;
+			}
+
+			foreach (var angle in degreeAngles)
+			{
+				double radAngle = angle * Math.PI / 180;
+				int index = degreeAngles.IndexOf(angle);
+                Joints[index].JointValue = radAngle;
+			}
+		}
+
+		public void SetAnglesInRadian(List<double> radAngles)
+		{
+			if (radAngles == null || radAngles.Count < 1 || radAngles.Count > Joints.Count)
+			{
+				return;
+			}
+
+			foreach (var angle in radAngles)
+			{
+				Joints[radAngles.IndexOf(angle)].JointValue = angle;
+			}
+		}
+
 		private void ComputeCurrentWristFrame()
 		{
-			DenseMatrix wrist = (DenseMatrix)Joints.Last().Value.JointTransformation.DenseMatrix.Inverse() * CurrentTarget.DenseMatrix;
+			DenseMatrix wrist = CurrentTarget.DenseMatrix * (DenseMatrix)Joints.Last().Value.JointTransformation.DenseMatrix.Inverse();
 
-			if (CurrentWristFrame == null)
+			if (_currentWristFrame == null)
 			{
-				CurrentWristFrame = new TransformationMatrix(wrist);
+				_currentWristFrame = new TransformationMatrix(wrist);
 			}
 			else
 			{
-				CurrentWristFrame.DenseMatrix = wrist;
+				_currentWristFrame.DenseMatrix = wrist;
 			}
 		}
 

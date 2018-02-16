@@ -51,5 +51,21 @@ namespace Homies.SARP.Common.Extensions
             return false;
 
         }
+
+		public static double L2Norm(this double[] values)
+		{
+			if (values == null || values.Length == 0)
+			{
+				return 0;
+			}
+
+			double squaredSum = 0;
+			foreach (var value in values)
+			{
+				squaredSum += Math.Pow(value, 2);
+			}
+
+			return Math.Sqrt(squaredSum);
+		}
     }
 }

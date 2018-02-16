@@ -37,10 +37,10 @@ namespace Homies.SARP.Machines.BaseStructure
 			get { return this.DhParameter.Theta; }
 			set
 			{
-				if (JointValueInRange(value))
-				{
+				//if (JointValueInRange(value))
+				//{
 					this.DhParameter.Theta = value;
-				}
+				//}
 			}
 		}
 		#endregion
