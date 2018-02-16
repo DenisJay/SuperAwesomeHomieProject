@@ -18,7 +18,6 @@ namespace Homies.SARP.UnitTest.Machines
 	{
 		Robot _testRobot;
 
-
 		[TestInitialize]
 		public void Initialization()
 		{
@@ -33,10 +32,6 @@ namespace Homies.SARP.UnitTest.Machines
 
 			TransformationMatrix relToA5 = new TransformationMatrix((DenseMatrix)wrist.DenseMatrix.Inverse() * target.DenseMatrix);
 
-			Debug.Print("\n" + target.DenseMatrix);
-			Debug.Print("\n" + wrist.DenseMatrix);
-			Debug.Print("\n" + relToA5.DenseMatrix);
-
 			double[] translation = { relToA5.Matrix3D.OffsetX, relToA5.Matrix3D.OffsetY, relToA5.Matrix3D.OffsetZ};
 			double length = translation.L2Norm();
 
@@ -46,8 +41,37 @@ namespace Homies.SARP.UnitTest.Machines
 		[TestMethod]
 		public void TestRobotTargetWristFrameWIthAllAxesRotated()
 		{
+			
 			_testRobot.SetAnglesInDegree(new List<double>() { 33, -65, -30, 12.45, 34.123, 56.76 });
 			
+			TransformationMatrix target = _testRobot.CurrentTarget;
+			TransformationMatrix wrist = _testRobot.CurrentWristFrame;
+
+			TransformationMatrix relToA5 = new TransformationMatrix((DenseMatrix)wrist.DenseMatrix.Inverse() * target.DenseMatrix);
+
+			double[] translation = { relToA5.Matrix3D.OffsetX, relToA5.Matrix3D.OffsetY, relToA5.Matrix3D.OffsetZ };
+			double length = translation.L2Norm();
+
+			Assert.IsTrue(length.DoubleEquals(240));
+		}
+
+		[TestMethod]
+		public void TestRobotTargetWristFrameWIthAllAxesRotatedAtRandomAngles()
+		{
+			Random rand = new Random();
+
+			var randAngles = new List<double>
+			{
+				rand.NextDouble() * 90,
+				rand.NextDouble() * 90,
+				rand.NextDouble() * 90,
+				rand.NextDouble() * 90,
+				rand.NextDouble() * 90,
+				rand.NextDouble() * 90,
+			};
+
+			_testRobot.SetAnglesInDegree(randAngles);
+
 			TransformationMatrix target = _testRobot.CurrentTarget;
 			TransformationMatrix wrist = _testRobot.CurrentWristFrame;
 
