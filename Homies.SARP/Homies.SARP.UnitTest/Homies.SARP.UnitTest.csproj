@@ -54,15 +54,14 @@
   <ItemGroup>
     <Compile Include="Kinematics\InverseKinematicsTest.cs" />
     <Compile Include="Kinematics\KinematicsTests.cs" />
+    <Compile Include="Machines\SixAxisKinematicMemberTest.cs" />
     <Compile Include="Mathematics\MatrixTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Machines\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Homies.SARP.Common\Homies.SARP.Common.csproj">
       <Project>{87913ab1-e243-47b7-aa75-e1a0df960ba6}</Project>

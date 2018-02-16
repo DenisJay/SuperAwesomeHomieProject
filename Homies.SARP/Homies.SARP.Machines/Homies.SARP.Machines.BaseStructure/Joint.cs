@@ -37,7 +37,7 @@ namespace Homies.SARP.Machines.BaseStructure
 
         public readonly double MotionMaximum;
 
-        public TransformationMatrix jointTransformation
+        public TransformationMatrix JointTransformation
         {
             get { return DhParameter.GetJointTransformation(); }
         }

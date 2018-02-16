@@ -1,5 +1,6 @@
 ﻿using Homies.SARP.Machines.BaseStructure;
 using Homies.SARP.Mathematics.Transformations;
+using MathNet.Numerics.LinearAlgebra.Double;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,6 +15,8 @@ namespace Homies.SARP.Machines.MachineStructures
     {
         string _modelName;
         SortedList<int, Joint> _joints;
+		TransformationMatrix _currentTarget;
+		TransformationMatrix _currentWristFrame;
 
         public Robot(string name, List<DHParameter> dhParam)
         {
@@ -44,7 +47,7 @@ namespace Homies.SARP.Machines.MachineStructures
             set { _modelName = value; }
         }
 
-        public TransformationMatrix TCP { get; set; }
+        public TransformationMatrix FlangeToTCP { get; set; }
 
         public SortedList<int, Joint> Joints
         {
@@ -52,5 +55,48 @@ namespace Homies.SARP.Machines.MachineStructures
             set { _joints = value; }
         }
 
-    }
+		public TransformationMatrix CurrentTarget
+		{
+			get
+			{
+				ComputeCurrentTarget();
+				return _currentTarget;
+			}
+		}
+
+		public TransformationMatrix CurrentWristFrame
+		{
+			get
+			{
+				ComputeCurrentWristFrame();
+				return _currentWristFrame;
+			}
+		}
+
+		private void ComputeCurrentWristFrame()
+		{
+			DenseMatrix wrist = (DenseMatrix)Joints.Last().Value.JointTransformation.DenseMatrix.Inverse() * CurrentTarget.DenseMatrix;
+
+			if (_currentWristFrame == null)
+			{
+				_currentWristFrame = new TransformationMatrix(wrist);
+			}
+			else
+			{
+				_currentWristFrame.DenseMatrix = wrist;
+            }
+		}
+
+		private void ComputeCurrentTarget()
+		{
+			TransformationMatrix target = new TransformationMatrix();
+
+			foreach (var joint in Joints)
+			{
+				target.DenseMatrix *= joint.Value.JointTransformation.DenseMatrix;
+			}
+
+			_currentTarget = target;
+		}
+	}
 }

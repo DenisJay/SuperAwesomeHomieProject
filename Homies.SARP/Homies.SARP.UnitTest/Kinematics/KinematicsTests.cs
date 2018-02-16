@@ -75,7 +75,7 @@ namespace Homies.SARP.UnitTest.Kinematics
             DenseMatrix resMatrix = DenseMatrix.CreateIdentity(4);
             var terminalMatrix = new TransformationMatrix();
 
-            resMatrix = GetTerminalFrameFor(new List<double>() { 0, -Math.PI / 2, 0, 0, 0, 0 });
+            resMatrix = GetTerminalFrameFor(_dhParam, new List<double>() { 0, -Math.PI / 2, 0, 0, 0, 0 });
 
             terminalMatrix.DenseMatrix = resMatrix;
             Debug.Print("\n" + resMatrix.ToString());
@@ -93,7 +93,7 @@ namespace Homies.SARP.UnitTest.Kinematics
             DenseMatrix resMatrix = DenseMatrix.CreateIdentity(4);
             var terminalMatrix = new TransformationMatrix();
 
-            resMatrix = GetTerminalFrameFor(new List<double>() { 0, -Math.PI / 2, 0, 0, Math.PI / 2, Math.PI / 2 });
+            resMatrix = GetTerminalFrameFor(_dhParam, new List<double>() { 0, -Math.PI / 2, 0, 0, Math.PI / 2, Math.PI / 2 });
 
             terminalMatrix.DenseMatrix = resMatrix;
             Debug.Print("\n" + resMatrix.ToString());
@@ -110,7 +110,7 @@ namespace Homies.SARP.UnitTest.Kinematics
             DenseMatrix resMatrix = DenseMatrix.CreateIdentity(4);
             var terminalMatrix = new TransformationMatrix();
 
-            resMatrix = GetTerminalFrameFor(new List<double>() { Math.PI / 2, -Math.PI / 2, 0, 0, 0, 0 });
+            resMatrix = GetTerminalFrameFor(_dhParam, new List<double>() { Math.PI / 2, -Math.PI / 2, 0, 0, 0, 0 });
 
             terminalMatrix.DenseMatrix = resMatrix;
             Debug.Print("\n" + resMatrix.ToString());
@@ -127,7 +127,7 @@ namespace Homies.SARP.UnitTest.Kinematics
             DenseMatrix resMatrix = DenseMatrix.CreateIdentity(4);
             var terminalMatrix = new TransformationMatrix();
 
-            resMatrix = GetTerminalFrameFor(new List<double>() { Math.PI / 4, -Math.PI / 2, 0, 0, 0, 0 });
+            resMatrix = GetTerminalFrameFor(_dhParam, new List<double>() { Math.PI / 4, -Math.PI / 2, 0, 0, 0, 0 });
 
             terminalMatrix.DenseMatrix = resMatrix;
             Debug.Print("\n" + resMatrix.ToString());
@@ -145,7 +145,7 @@ namespace Homies.SARP.UnitTest.Kinematics
             DenseMatrix resMatrix = DenseMatrix.CreateIdentity(4);
             var terminalMatrix = new TransformationMatrix();
 
-            resMatrix = GetTerminalFrameFor(new List<double>() { 0, 0, -Math.PI / 2, 0, 0, 0 });
+            resMatrix = GetTerminalFrameFor(_dhParam, new List<double>() { 0, 0, -Math.PI / 2, 0, 0, 0 });
 
             terminalMatrix.DenseMatrix = resMatrix;
             Debug.Print("\n" + resMatrix.ToString());
@@ -162,7 +162,7 @@ namespace Homies.SARP.UnitTest.Kinematics
             DenseMatrix resMatrix = DenseMatrix.CreateIdentity(4);
             var terminalMatrix = new TransformationMatrix();
 
-            resMatrix = GetTerminalFrameFor(new List<double>() { 0, -Math.PI / 2, 0, Math.PI / 2, Math.PI / 2, 0 });
+            resMatrix = GetTerminalFrameFor(_dhParam, new List<double>() { 0, -Math.PI / 2, 0, Math.PI / 2, Math.PI / 2, 0 });
 
             terminalMatrix.DenseMatrix = resMatrix;
             Debug.Print("\n" + resMatrix.ToString());
@@ -172,27 +172,35 @@ namespace Homies.SARP.UnitTest.Kinematics
                 terminalMatrix.Matrix3D.OffsetZ.DoubleEquals(1784));
         }
 
+
+
         #endregion
 
         #region Private Methods
 
-        private DenseMatrix GetTerminalFrameFor(List<double> angles)
+		/// <summary>
+		/// Computes the terminal frame for a given kinematic chain using dh-parameter and any given axis configuration
+		/// </summary>
+		/// <param name="dhParams">Set of dh-parameter specifying the kinematic chain</param>
+		/// <param name="angles">angles specifying the configuration</param>
+		/// <returns></returns>
+        public static DenseMatrix GetTerminalFrameFor(List<DHParameter> dhParams, List<double> angles)
         {
             var resMatrix = DenseMatrix.CreateIdentity(4);
 
-            if (angles.Count != _dhParam.Count)
+            if (angles.Count != dhParams.Count)
             {
-                return resMatrix;
+				throw new ArgumentOutOfRangeException("The number of joints and the given number of angles do not fit.");
             }
 
-            for (int i = 0; i < _dhParam.Count; i++)
+            for (int i = 0; i < dhParams.Count; i++)
             {
-                _dhParam[i].Theta = angles[i];
+				dhParams[i].Theta = angles[i];
 
-                DenseMatrix mat = Transformations.GetRotMatrixX(_dhParam[i].Alpha) *
-                    Transformations.GetTranslationMatrix(_dhParam[i].A, 0, 0) *
-                    Transformations.GetRotMatrixZ(_dhParam[i].Theta) *
-                    Transformations.GetTranslationMatrix(0, 0, _dhParam[i].D);
+                DenseMatrix mat = Transformations.GetRotMatrixX(dhParams[i].Alpha) *
+                    Transformations.GetTranslationMatrix(dhParams[i].A, 0, 0) *
+                    Transformations.GetRotMatrixZ(dhParams[i].Theta) *
+                    Transformations.GetTranslationMatrix(0, 0, dhParams[i].D);
                 resMatrix *= mat;
             }
 

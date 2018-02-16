@@ -35,7 +35,7 @@ namespace Homies.SARP.Machines.BaseStructure
             Theta = theta;
         }
 
-        internal TransformationMatrix GetJointTransformation()
+        public TransformationMatrix GetJointTransformation()
         {
             double ct = Math.Cos(Theta);
             double st = Math.Sin(Theta);

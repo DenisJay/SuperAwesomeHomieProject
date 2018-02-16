@@ -10,6 +10,7 @@ using MathNet.Numerics.LinearAlgebra.Double;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Homies.SARP.Machines.MachineStructures;
 using Homies.SARP.Kinematics.Homies.SARP.Kinematics.Inverse;
+using Homies.SARP.Common.Extensions;
 
 namespace Homies.SARP.UnitTest.Kinematics
 {
@@ -30,26 +31,13 @@ namespace Homies.SARP.UnitTest.Kinematics
 		[TestMethod]
 		public void GetAnglesFromTargetFrame()
 		{
-			DenseMatrix target = Transformations.GetTranslationMatrix(2000, 0, 2000) * Transformations.GetRotMatrixY(-Math.PI / 2);
-			var targetFrame = new TransformationMatrix(target);
+			double testAngleValue = 0;
+            _testRobot.Joints[0].DhParameter.Theta = testAngleValue;
+			TransformationMatrix currentRobotTarget = _testRobot.CurrentTarget;
 
-			List<double> solution = _inverse.GetInverseKinematics(targetFrame, _testRobot);
+			List<double> angles = _inverse.GetInverseKinematics(currentRobotTarget, _testRobot);
 
-			if (solution.Count != _testRobot.Joints.Count)
-			{
-				throw new ArgumentOutOfRangeException();
-			}
-
-			for (int i = 0; i < solution.Count; i++)
-			{
-				_testRobot.Joints[i].DhParameter.Theta = solution[i];
-			}
-
-			TransformationMatrix terminalFrame = _testRobot.TCP;
-			var res = target * terminalFrame.DenseMatrix.Inverse();
-
-			//checking for dummy angles - correct angles must be set
-			Assert.IsTrue(Math.Abs(res.Determinant() - 1) < 0.000001);
+			Assert.IsTrue(angles[0].DoubleEquals(testAngleValue));
 		}
 	}
 }
