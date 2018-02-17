@@ -65,8 +65,8 @@ namespace Homies.SARP.Kinematics.Common
 			_jointStandardTransform.DenseMatrix = DenseMatrix.OfArray(new double[,]
 			{
 				{   ct,   -st,   0,     A},
-				{ca*st, ca*ct, -sa, -D*sa},
-				{sa*st, sa*ct,  ca,  D*ca},
+				{ca*st, ca*ct, -sa, -_dStandard*sa},
+				{sa*st, sa*ct,  ca,  _dStandard*ca},
 				{    0,     0,   0,     1}
 			});
 		}
