@@ -25,7 +25,7 @@ namespace Homies.SARP.Kinematics.Inverse
 			ResultAxisValues = new List<double>();
 		}
 
-		public List<double> GetInverseKinematics(TransformationMatrix targetMatrix, List<DHParameter> dhParam)
+		public List<double> GetAxisValues(TransformationMatrix targetMatrix, List<DHParameter> dhParam)
 		{
 			List<double> returnAnglesForTest = new List<double>();
 
