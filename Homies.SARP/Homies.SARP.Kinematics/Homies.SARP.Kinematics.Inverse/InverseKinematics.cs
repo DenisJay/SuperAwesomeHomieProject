@@ -8,7 +8,12 @@ using System.Diagnostics;
 
 namespace Homies.SARP.Kinematics.Inverse
 {
-	public class InverseKinematics : IInverseKinematics
+
+	//TODO: 
+	// 1. Checking if target frame is in workspace
+	// 2. Checking when multiple angles (solutions) which of the possible solutions is closer / possible
+	// 3. When turn / status is specified choose correct angle
+	public class InverseKinematics
 	{
 		public List<double> ResultAxisValues { get; set; }
 
@@ -16,12 +21,15 @@ namespace Homies.SARP.Kinematics.Inverse
 		{
 			List<double> returnAngles = new List<double>();
 
-			TransformationMatrix wrist = new TransformationMatrix(
+			TransformationMatrix wristToAxis1 = new TransformationMatrix(
+				(DenseMatrix)dhParam.First().JointStandardTransform.DenseMatrix.Inverse() * 
 				targetMatrix.DenseMatrix * 
 				(DenseMatrix)dhParam.Last().JointTransform.DenseMatrix.Inverse());
 
-			double angleDeg1Plus = Math.Atan2(wrist.Matrix3D.OffsetY, wrist.Matrix3D.OffsetX) * 180 / Math.PI;
-			double angleDeg1Minus = Math.Atan2(-wrist.Matrix3D.OffsetY, -wrist.Matrix3D.OffsetX) * 180 / Math.PI;
+			double angleDeg1Plus = Math.Atan2(wristToAxis1.Matrix3D.OffsetY, wristToAxis1.Matrix3D.OffsetX) * 180 / Math.PI;
+			double angleDeg1Minus = Math.Atan2(-wristToAxis1.Matrix3D.OffsetY, -wristToAxis1.Matrix3D.OffsetX) * 180 / Math.PI;
+
+			
 
 			returnAngles.Add(angleDeg1Plus);
 			returnAngles.Add(angleDeg1Minus);

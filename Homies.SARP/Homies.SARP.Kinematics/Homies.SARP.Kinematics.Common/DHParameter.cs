@@ -21,7 +21,11 @@ namespace Homies.SARP.Kinematics.Common
         double _d;
         double _theta;
 
-        TransformationMatrix _jointTransform = new TransformationMatrix();
+		double _thetaStandard;
+		double _dStandard;
+
+		TransformationMatrix _jointTransform = new TransformationMatrix();
+		TransformationMatrix _jointStandardTransform = new TransformationMatrix();
 
         #endregion //FIELDS
 
@@ -29,8 +33,10 @@ namespace Homies.SARP.Kinematics.Common
         {
             A = a;
             D = d;
+			_dStandard = d;
             Alpha = alpha;
             Theta = theta;
+			_thetaStandard = theta;
         }
 
         private void GetJointTransformation()
@@ -49,12 +55,28 @@ namespace Homies.SARP.Kinematics.Common
             });
         }
 
+		private void GetStandardTransformation()
+		{
+			double ct = Math.Cos(_thetaStandard);
+			double st = Math.Sin(_thetaStandard);
+			double ca = Math.Cos(Alpha);
+			double sa = Math.Sin(Alpha);
+
+			_jointStandardTransform.DenseMatrix = DenseMatrix.OfArray(new double[,]
+			{
+				{   ct,   -st,   0,     A},
+				{ca*st, ca*ct, -sa, -D*sa},
+				{sa*st, sa*ct,  ca,  D*ca},
+				{    0,     0,   0,     1}
+			});
+		}
+
         #region PROPERTIES
 
         public double Theta
         {
             get { return _theta; }
-            set { _theta = value; GetJointTransformation(); }
+            set { _theta = value; }
         }
 
         public double A
@@ -85,6 +107,16 @@ namespace Homies.SARP.Kinematics.Common
             private set { _jointTransform = value; }
         }
 
-        #endregion //PROPERTIES
-    }
+		public TransformationMatrix JointStandardTransform
+		{
+			get
+			{
+				GetStandardTransformation();
+				return _jointStandardTransform;
+			}
+			private set { _jointStandardTransform = value; }
+		}
+
+		#endregion //PROPERTIES
+	}
 }

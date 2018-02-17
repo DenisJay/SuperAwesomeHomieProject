@@ -39,10 +39,6 @@ namespace Homies.SARP.UnitTest.KinematicsTest
 			TransformationMatrix currentRobotTarget = _testRobot.CurrentTarget;
 
 			List<double> angles = _inverse.GetInverseKinematics(currentRobotTarget, _dhParam);
-			
-			//Kuka convention A1-Axis points downward (-z-direction of the robot root)
-			//TODO: Must be implemented in the machine configuration
-			angles[0] *= -1;
 
 			Assert.IsTrue(angles[0].DoubleEquals(testAngleDeg));
 		}
