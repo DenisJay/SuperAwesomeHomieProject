@@ -21,11 +21,11 @@ namespace Homies.SARP.Kinematics.Forward
                 throw new ArgumentNullException(nameof(dhParameter));
             }
 
-			DhParameterCollection = new SortedList<int, DHParameter>();
+            DhParameterCollection = new SortedList<int, DHParameter>();
 
             for (var i = 0; i < dhParameter.Count; i++)
             {
-				DhParameterCollection.Add(i, dhParameter.ElementAt(i));
+                DhParameterCollection.Add(i, dhParameter.ElementAt(i));
             }
         }
 
@@ -36,84 +36,104 @@ namespace Homies.SARP.Kinematics.Forward
         /// <summary>
         /// Returns the position hit from the current configuration.
         /// </summary>
-        public Matrix3D GetForwardTransformationMatrix()
+        public DenseMatrix GetForwardTransformationMatrix()
         {
-            var zAxis = new Vector3D(0, 0, 1);
-            var xAxis = new Vector3D(1, 0, 0);
 
-            var transformGroup = new Transform3DGroup();
+            var zAxis = DenseVector.OfArray(new double[] { 0, 0, 1, 0 });
+            var xAxis = DenseVector.OfArray(new double[] { 1, 0, 0, 0 });
+
+            var result = DenseMatrix.CreateIdentity(4);
 
             for (int i = 0; i < DhParameterCollection.Count; i++)
             {
-                var curretDHParameter = DhParameterCollection[i];
+                var currentDhParameter = DhParameterCollection[i];
 
-                zAxis = transformGroup.Value.ZAxis();
-                zAxis.Normalize();
-                
-                //Translation in Z
-                var zTranslate = new TranslateTransform3D(zAxis * curretDHParameter.D);
-                //Rotation around the z-Axis
-                var thetaRotate = new RotateTransform3D(new AxisAngleRotation3D(zAxis, curretDHParameter.Theta * 180 / Math.PI));
-
-                transformGroup.Children.Insert(0, zTranslate);
-                transformGroup.Children.Insert(1, thetaRotate);
-
-                xAxis = transformGroup.Value.XAxis();
-                xAxis.Normalize();
-
-                //Translation in X
-                var xTranslate = new TranslateTransform3D(xAxis * curretDHParameter.A);
-                //Rotation around X
-                var alphaRotate = new RotateTransform3D(new AxisAngleRotation3D(xAxis, curretDHParameter.Alpha * 180 / Math.PI));
-
-                //Alpha Rotation has to be first, as the x-Axis 
-                transformGroup.Children.Insert(0, alphaRotate);
-                transformGroup.Children.Insert(1, xTranslate);
-
+                var currentMatrix = GetDenseMatrixFromDhParameter(currentDhParameter);
+                result *= currentMatrix;
             }
 
-            return transformGroup.Value;
+            return result;
         }
 
-		public abstract TransformationMatrix GetTerminalFrame(List<DHParameter> joints);
-		public abstract TransformationMatrix GetTerminalFrame(List<DHParameter> joints, List<double> jointValues);
-		public abstract int GetStatus(List<DHParameter> joints, List<double> jointValues);
-		public abstract int GetTurn(List<DHParameter> joints, List<double> jointValues);
+        private DenseMatrix GetDenseMatrixFromDhParameter(DHParameter dhParam)
+        {
+            
+            // Source: http://www.oemg.ac.at/Mathe-Brief/fba2015/VWA_Prutsch.pdf, Page 19
+            // http://www4.cs.umanitoba.ca/~jacky/Robotics/Papers/spong_kinematics.pdf, Page 63
+            // https://de.wikipedia.org/wiki/Denavit-Hartenberg-Transformation
+            var firstColumn = DenseVector.OfArray(new double[] {
+                Math.Cos(dhParam.Theta),
+                Math.Sin(dhParam.Theta),
+                0,
+                0
+            });
 
-		/// <summary>
-		/// Computes the terminal frame for a given kinematic chain using dh-parameter and any given axis configuration
-		/// </summary>
-		/// <param name="dhParams">Set of dh-parameter specifying the kinematic chain</param>
-		/// <param name="angles">angles specifying the configuration</param>
-		/// <returns></returns>
-		public static DenseMatrix GetTerminalFrameFor(List<DHParameter> dhParams, List<double> angles)
-		{
-			var resMatrix = DenseMatrix.CreateIdentity(4);
+            var secondColumn = DenseVector.OfArray(new double[] {
+                -Math.Sin(dhParam.Theta) * Math.Cos(dhParam.Alpha),
+                Math.Cos(dhParam.Theta) * Math.Cos(dhParam.Alpha),
+                Math.Sin(dhParam.Alpha),
+                0
+            });
 
-			if (angles.Count != dhParams.Count)
-			{
-				throw new ArgumentOutOfRangeException("The number of joints and the given number of angles do not fit.");
-			}
+            var thirdColumn = DenseVector.OfArray(new double[] {
+                Math.Sin(dhParam.Theta) * Math.Sin(dhParam.Alpha),
+                -Math.Cos(dhParam.Theta) * Math.Sin(dhParam.Alpha),
+                Math.Cos(dhParam.Alpha),
+                0
+            });
 
-			for (int i = 0; i < dhParams.Count; i++)
-			{
-				dhParams[i].Theta = angles[i];
+            var fourthColumn = DenseVector.OfArray(new double[] {
+                dhParam.A * Math.Cos(dhParam.Theta),
+                dhParam.A * Math.Sin(dhParam.Theta),
+                dhParam.D,
+                1
+            });
 
-				DenseMatrix mat = Transformations.GetRotMatrixX(dhParams[i].Alpha) *
-					Transformations.GetTranslationMatrix(dhParams[i].A, 0, 0) *
-					Transformations.GetRotMatrixZ(dhParams[i].Theta) *
-					Transformations.GetTranslationMatrix(0, 0, dhParams[i].D);
-				resMatrix *= mat;
-			}
+            var columns = new DenseVector[] { firstColumn, secondColumn, thirdColumn, fourthColumn };
+            var matrix = DenseMatrix.OfColumnVectors(columns);
 
-			return resMatrix;
-		}
+            return matrix;
+        }
 
-		#endregion
+        public abstract TransformationMatrix GetTerminalFrame(List<DHParameter> joints);
+        public abstract TransformationMatrix GetTerminalFrame(List<DHParameter> joints, List<double> jointValues);
+        public abstract int GetStatus(List<DHParameter> joints, List<double> jointValues);
+        public abstract int GetTurn(List<DHParameter> joints, List<double> jointValues);
 
-		#region Properties
+        /// <summary>
+        /// Computes the terminal frame for a given kinematic chain using dh-parameter and any given axis configuration
+        /// </summary>
+        /// <param name="dhParams">Set of dh-parameter specifying the kinematic chain</param>
+        /// <param name="angles">angles specifying the configuration</param>
+        /// <returns></returns>
+        public static DenseMatrix GetTerminalFrameFor(List<DHParameter> dhParams, List<double> angles)
+        {
+            var resMatrix = DenseMatrix.CreateIdentity(4);
 
-		public readonly SortedList<int, DHParameter> DhParameterCollection;
+            if (angles.Count != dhParams.Count)
+            {
+                throw new ArgumentOutOfRangeException("The number of joints and the given number of angles do not fit.");
+            }
+
+            for (int i = 0; i < dhParams.Count; i++)
+            {
+                dhParams[i].Theta = angles[i];
+
+                DenseMatrix mat = Transformations.GetRotMatrixX(dhParams[i].Alpha) *
+                    Transformations.GetTranslationMatrix(dhParams[i].A, 0, 0) *
+                    Transformations.GetRotMatrixZ(dhParams[i].Theta) *
+                    Transformations.GetTranslationMatrix(0, 0, dhParams[i].D);
+                resMatrix *= mat;
+            }
+
+            return resMatrix;
+        }
+
+        #endregion
+
+        #region Properties
+
+        public readonly SortedList<int, DHParameter> DhParameterCollection;
 
         #endregion
 

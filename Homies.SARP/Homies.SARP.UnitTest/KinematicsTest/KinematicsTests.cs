@@ -12,7 +12,7 @@ using Kin = Homies.SARP.Kinematics.Forward;
 
 namespace Homies.SARP.UnitTest.KinematicsTest
 {
-	[TestClass]
+    [TestClass]
     public class KinematicsTests
     {
 
@@ -28,7 +28,7 @@ namespace Homies.SARP.UnitTest.KinematicsTest
         /// Testing the forward kinematic for one joint.
         /// </summary>
         [TestMethod]
-        public void TestForwardKinematic()
+        public void TestForwardKinematicWith1Joint()
         {
             //Arrange
             var dhParams = new List<DHParameter>
@@ -37,31 +37,71 @@ namespace Homies.SARP.UnitTest.KinematicsTest
             };
 
             //Act
-            var kinematc = new Kin.RobotKinematics(dhParams);
-            var forwardMatrix = kinematc.GetForwardTransformationMatrix();
+            var kinematic = new Kin.RobotKinematics(dhParams);
+            var forwardMatrix = kinematic.GetForwardTransformationMatrix();
 
             //Assert
             //By rotating 180° around the x-Axis (Alpha = Pi), the z and y axis should be inverted.
-            var xAxis = forwardMatrix.XAxis();
-            var yAxis = forwardMatrix.YAxis();
-            var zAxis = forwardMatrix.ZAxis();
-            var offset = forwardMatrix.Offset();
+            var xAxis = forwardMatrix.Column(0);
+            var yAxis = forwardMatrix.Column(1);
+            var zAxis = forwardMatrix.Column(2);
+            var offset = forwardMatrix.Column(3);
 
-            Assert.IsTrue(xAxis.X.DoubleEquals(1));
-            Assert.IsTrue(xAxis.Y.DoubleEquals(0));
-            Assert.IsTrue(xAxis.Z.DoubleEquals(0));
+            Assert.IsTrue(xAxis[0].DoubleEquals(1));
+            Assert.IsTrue(xAxis[1].DoubleEquals(0));
+            Assert.IsTrue(xAxis[2].DoubleEquals(0));
 
-            Assert.IsTrue(yAxis.X.DoubleEquals(0));
-            Assert.IsTrue(yAxis.Y.DoubleEquals(-1));
-            Assert.IsTrue(yAxis.Z.DoubleEquals(0));
+            Assert.IsTrue(yAxis[0].DoubleEquals(0));
+            Assert.IsTrue(yAxis[1].DoubleEquals(-1));
+            Assert.IsTrue(yAxis[2].DoubleEquals(0));
 
-            Assert.IsTrue(zAxis.X.DoubleEquals(0));
-            Assert.IsTrue(zAxis.Y.DoubleEquals(0));
-            Assert.IsTrue(zAxis.Z.DoubleEquals(-1));
+            Assert.IsTrue(zAxis[0].DoubleEquals(0));
+            Assert.IsTrue(zAxis[1].DoubleEquals(0));
+            Assert.IsTrue(zAxis[2].DoubleEquals(-1));
 
-            Assert.IsTrue(offset.X.DoubleEquals(0));
-            Assert.IsTrue(offset.Y.DoubleEquals(0));
-            Assert.IsTrue(offset.Z.DoubleEquals(500));
+            Assert.IsTrue(offset[0].DoubleEquals(0));
+            Assert.IsTrue(offset[1].DoubleEquals(0));
+            Assert.IsTrue(offset[2].DoubleEquals(500));
+        }
+
+        /// <summary>
+        /// Testing the forward kinematic for one joint.
+        /// </summary>
+        [TestMethod]
+        public void TestForwardKinematicWith2Joints()
+        {
+            //Arrange
+            var dhParams = new List<DHParameter>
+            {
+                new DHParameter(Math.PI, 0, 0, 500),
+                new DHParameter(Math.PI/2, 500, Math.PI/2, 0)
+            };
+
+            //Act
+            var kinematic = new Kin.RobotKinematics(dhParams);
+            var forwardMatrix = kinematic.GetForwardTransformationMatrix();
+
+            //Assert
+            var xAxis = forwardMatrix.Column(0);
+            var yAxis = forwardMatrix.Column(1);
+            var zAxis = forwardMatrix.Column(2);
+            var offset = forwardMatrix.Column(3);
+
+            Assert.IsTrue(xAxis[0].DoubleEquals(0));
+            Assert.IsTrue(xAxis[1].DoubleEquals(-1));
+            Assert.IsTrue(xAxis[2].DoubleEquals(0));
+
+            Assert.IsTrue(yAxis[0].DoubleEquals(0));
+            Assert.IsTrue(yAxis[1].DoubleEquals(0));
+            Assert.IsTrue(yAxis[2].DoubleEquals(-1));
+
+            Assert.IsTrue(zAxis[0].DoubleEquals(1));
+            Assert.IsTrue(zAxis[1].DoubleEquals(0));
+            Assert.IsTrue(zAxis[2].DoubleEquals(0));
+
+            Assert.IsTrue(offset[0].DoubleEquals(0));
+            Assert.IsTrue(offset[1].DoubleEquals(-500));
+            Assert.IsTrue(offset[2].DoubleEquals(500));                        
         }
 
         #region CheckDHParameter
@@ -77,9 +117,9 @@ namespace Homies.SARP.UnitTest.KinematicsTest
 
             terminalMatrix.DenseMatrix = resMatrix;
 
-			Debug.Print("\n" + resMatrix.ToString());
+            Debug.Print("\n" + resMatrix.ToString());
 
-			Assert.IsTrue(
+            Assert.IsTrue(
                 terminalMatrix.Matrix3D.OffsetX.DoubleEquals(1790) &&
                 terminalMatrix.Matrix3D.OffsetY.DoubleEquals(0) &&
                 terminalMatrix.Matrix3D.OffsetZ.DoubleEquals(1784));
