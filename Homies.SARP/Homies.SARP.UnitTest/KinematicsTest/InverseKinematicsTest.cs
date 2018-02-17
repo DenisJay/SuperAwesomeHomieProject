@@ -9,7 +9,7 @@ using Homies.SARP.Mathematics.Transformations;
 using MathNet.Numerics.LinearAlgebra.Double;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Homies.SARP.Machines.MachineStructures;
-using Homies.SARP.Kinematics.Homies.SARP.Kinematics.Inverse;
+using Homies.SARP.Kinematics.Inverse;
 using Homies.SARP.Common.Extensions;
 using Homies.SARP.Kinematics.Common;
 

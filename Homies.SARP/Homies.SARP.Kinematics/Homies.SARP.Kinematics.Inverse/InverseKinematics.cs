@@ -6,13 +6,13 @@ using System.Linq;
 using MathNet.Numerics.LinearAlgebra.Double;
 using System.Diagnostics;
 
-namespace Homies.SARP.Kinematics.Homies.SARP.Kinematics.Inverse
+namespace Homies.SARP.Kinematics.Inverse
 {
-	public class InverseKinematics
+	public class InverseKinematics : IInverseKinematics
 	{
 		public List<double> ResultAxisValues { get; set; }
 
-		public List<double> GetInverseKinematics(TransformationMatrix targetMatrix, List<DHParameter> dhParam)
+		public List<double> GetAxisValues(TransformationMatrix targetMatrix, List<DHParameter> dhParam)
 		{
 			List<double> returnAngles = new List<double>();
 

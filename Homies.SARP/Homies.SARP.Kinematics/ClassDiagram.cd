@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access" MembersFormat="NameAndType">
+  <Class Name="Homies.SARP.Kinematics.RobotKinematics">
+    <Position X="0.75" Y="3" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>IAAgAAAAAAAAAAAAAAAAAAAAAAAAIAABAAAFAAAAAAA=</HashCode>
+      <FileName>Homies.SARP.Kinematics\RobotKinematics.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="DhParameterCollection" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Homies.SARP.Kinematics.Common.DHParameter">
+    <Position X="6.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAMAAAAAQAAEAAAAAAAAAAAAABAAAAAAJwAAQAA=</HashCode>
+      <FileName>Homies.SARP.Kinematics.Common\DHParameter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Homies.SARP.Kinematics.Forward.IForwardKinematics">
+    <Position X="0.75" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAQAAAAAAAEBAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Homies.SARP.Kinematics.Forward\IForwardKinematics.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Homies.SARP.Kinematics.Inverse.IInverseKinematics">
+    <Position X="3.25" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Homies.SARP.Kinematics.Inverse\IInverseKinematics.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

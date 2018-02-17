@@ -42,7 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Homies.SARP.Common.Extensions\GeneralExtensions.cs" />
-    <Compile Include="Homies.SARP.Common.Extensions\Media3DExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

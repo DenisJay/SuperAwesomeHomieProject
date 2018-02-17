@@ -4,10 +4,11 @@ using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MathNet.Numerics.LinearAlgebra.Double;
 using Homies.SARP.Common.Extensions;
+using Homies.SARP.Kinematics;
 using Homies.SARP.Kinematics.Common;
+using Homies.SARP.Kinematics.Forward;
 using Homies.SARP.Machines.Factories;
 using Homies.SARP.Mathematics.Transformations;
-using Kin = Homies.SARP.Kinematics.Forward;
 
 namespace Homies.SARP.UnitTest.KinematicsTest
 {
@@ -36,9 +37,9 @@ namespace Homies.SARP.UnitTest.KinematicsTest
             };
 
             //Act
-            var kinematic = new Kin.RobotKinematics(dhParams);
+            var kinematic = new RobotKinematics(dhParams);            
             var forwardMatrix = kinematic.GetForwardTransformationMatrix();
-
+            
             //Assert
             //By rotating 180° around the x-Axis (Alpha = Pi), the z and y axis should be inverted.
             var xAxis = forwardMatrix.Column(0);
@@ -77,7 +78,7 @@ namespace Homies.SARP.UnitTest.KinematicsTest
             };
 
             //Act
-            var kinematic = new Kin.RobotKinematics(dhParams);
+            var kinematic = new RobotKinematics(dhParams);
             var forwardMatrix = kinematic.GetForwardTransformationMatrix();
 
             //Assert
@@ -118,7 +119,7 @@ namespace Homies.SARP.UnitTest.KinematicsTest
             };
 
             //Act
-            var kinematic = new Kin.RobotKinematics(dhParams);
+            var kinematic = new RobotKinematics(dhParams);
             var forwardMatrix = kinematic.GetForwardTransformationMatrix();
 
             //Assert
@@ -153,7 +154,7 @@ namespace Homies.SARP.UnitTest.KinematicsTest
             DenseMatrix resMatrix = DenseMatrix.CreateIdentity(4);
             var terminalMatrix = new TransformationMatrix();
 
-            resMatrix = Kin.Kinematics.GetTerminalFrameFor(_dhParam, new List<double>() { 0, -Math.PI / 2, 0, 0, 0, 0 });
+            resMatrix = ForwardKinematics.GetTerminalFrameFor(_dhParam, new List<double>() { 0, -Math.PI / 2, 0, 0, 0, 0 });
 
             terminalMatrix.DenseMatrix = resMatrix;
 
@@ -172,7 +173,7 @@ namespace Homies.SARP.UnitTest.KinematicsTest
             DenseMatrix resMatrix = DenseMatrix.CreateIdentity(4);
             var terminalMatrix = new TransformationMatrix();
 
-            resMatrix = Kin.Kinematics.GetTerminalFrameFor(_dhParam, new List<double>() { 0, -Math.PI / 2, 0, 0, Math.PI / 2, Math.PI / 2 });
+            resMatrix = ForwardKinematics.GetTerminalFrameFor(_dhParam, new List<double>() { 0, -Math.PI / 2, 0, 0, Math.PI / 2, Math.PI / 2 });
 
             terminalMatrix.DenseMatrix = resMatrix;
             Debug.Print("\n" + resMatrix.ToString());
@@ -189,7 +190,7 @@ namespace Homies.SARP.UnitTest.KinematicsTest
             DenseMatrix resMatrix = DenseMatrix.CreateIdentity(4);
             var terminalMatrix = new TransformationMatrix();
 
-            resMatrix = Kin.Kinematics.GetTerminalFrameFor(_dhParam, new List<double>() { Math.PI / 2, -Math.PI / 2, 0, 0, 0, 0 });
+            resMatrix = ForwardKinematics.GetTerminalFrameFor(_dhParam, new List<double>() { Math.PI / 2, -Math.PI / 2, 0, 0, 0, 0 });
 
             terminalMatrix.DenseMatrix = resMatrix;
             Debug.Print("\n" + resMatrix.ToString());
@@ -206,7 +207,7 @@ namespace Homies.SARP.UnitTest.KinematicsTest
             DenseMatrix resMatrix = DenseMatrix.CreateIdentity(4);
             var terminalMatrix = new TransformationMatrix();
 
-            resMatrix = Kin.Kinematics.GetTerminalFrameFor(_dhParam, new List<double>() { Math.PI / 4, -Math.PI / 2, 0, 0, 0, 0 });
+            resMatrix = ForwardKinematics.GetTerminalFrameFor(_dhParam, new List<double>() { Math.PI / 4, -Math.PI / 2, 0, 0, 0, 0 });
 
             terminalMatrix.DenseMatrix = resMatrix;
             Debug.Print("\n" + resMatrix.ToString());
@@ -224,7 +225,7 @@ namespace Homies.SARP.UnitTest.KinematicsTest
             DenseMatrix resMatrix = DenseMatrix.CreateIdentity(4);
             var terminalMatrix = new TransformationMatrix();
 
-            resMatrix = Kin.Kinematics.GetTerminalFrameFor(_dhParam, new List<double>() { 0, 0, -Math.PI / 2, 0, 0, 0 });
+            resMatrix = ForwardKinematics.GetTerminalFrameFor(_dhParam, new List<double>() { 0, 0, -Math.PI / 2, 0, 0, 0 });
 
             terminalMatrix.DenseMatrix = resMatrix;
             Debug.Print("\n" + resMatrix.ToString());
@@ -241,7 +242,7 @@ namespace Homies.SARP.UnitTest.KinematicsTest
             DenseMatrix resMatrix = DenseMatrix.CreateIdentity(4);
             var terminalMatrix = new TransformationMatrix();
 
-            resMatrix = Kin.Kinematics.GetTerminalFrameFor(_dhParam, new List<double>() { 0, -Math.PI / 2, 0, Math.PI / 2, Math.PI / 2, 0 });
+            resMatrix = ForwardKinematics.GetTerminalFrameFor(_dhParam, new List<double>() { 0, -Math.PI / 2, 0, Math.PI / 2, Math.PI / 2, 0 });
 
             terminalMatrix.DenseMatrix = resMatrix;
             Debug.Print("\n" + resMatrix.ToString());

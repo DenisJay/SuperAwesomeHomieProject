@@ -28,9 +28,13 @@ namespace Homies.SARP.Machines.BaseStructure
 
         #region Methods
 
+        /// <summary>
+        /// Returns True, if <paramref name="jointValue"/> is bigger than the MotionMinimum and smaller then the MotionMaximum.
+        /// </summary>
+        /// <param name="jointValue"> The value to check. </param>
 		protected bool JointValueInRange(double jointValue)
 		{
-			if (jointValue < MotionMinimum && jointValue > MotionMinimum)
+			if (jointValue >= MotionMinimum && jointValue <= MotionMaximum)
 			{
 				return true;
 			}

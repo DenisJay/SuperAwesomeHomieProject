@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Media.Media3D;
-using Homies.SARP.Common.Homies.SARP.Common.Extensions;
 using Homies.SARP.Mathematics.Transformations;
 using Homies.SARP.Kinematics.Common;
 using MathNet.Numerics.LinearAlgebra.Double;
 
 namespace Homies.SARP.Kinematics.Forward
 {
-    public abstract class Kinematics : IForwardKinematics
+    public abstract class ForwardKinematics : IForwardKinematics
     {
         #region Construct
 
-        protected Kinematics(IReadOnlyCollection<DHParameter> dhParameter)
+        protected ForwardKinematics(IReadOnlyCollection<DHParameter> dhParameter)
         {
             //A kinematic with no joints is invalid.
             if (dhParameter == null || !dhParameter.Any())
@@ -39,25 +37,27 @@ namespace Homies.SARP.Kinematics.Forward
         public DenseMatrix GetForwardTransformationMatrix()
         {
 
-            var zAxis = DenseVector.OfArray(new double[] { 0, 0, 1, 0 });
-            var xAxis = DenseVector.OfArray(new double[] { 1, 0, 0, 0 });
-
             var result = DenseMatrix.CreateIdentity(4);
 
             for (int i = 0; i < DhParameterCollection.Count; i++)
             {
                 var currentDhParameter = DhParameterCollection[i];
 
-                var currentMatrix = GetDenseMatrixFromDhParameter(currentDhParameter);
+                var currentMatrix = GetDenseMatrixForDhParameter(currentDhParameter);
                 result *= currentMatrix;
             }
 
             return result;
         }
 
-        private DenseMatrix GetDenseMatrixFromDhParameter(DHParameter dhParam)
+        /// <summary>
+        /// Computes the transformation matrix for any given DHParameter.
+        /// </summary>
+        /// <param name="dhParam"> DHParameter for which the transformation matrix is to be determined. </param>
+        /// <returns></returns>
+        public static DenseMatrix GetDenseMatrixForDhParameter(DHParameter dhParam)
         {
-            
+
             // Source: http://www.oemg.ac.at/Mathe-Brief/fba2015/VWA_Prutsch.pdf, Page 19
             // http://www4.cs.umanitoba.ca/~jacky/Robotics/Papers/spong_kinematics.pdf, Page 63
             // https://de.wikipedia.org/wiki/Denavit-Hartenberg-Transformation
