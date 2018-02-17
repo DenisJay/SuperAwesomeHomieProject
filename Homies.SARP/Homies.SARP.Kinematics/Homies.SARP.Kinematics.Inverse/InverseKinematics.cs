@@ -6,7 +6,7 @@ using System.Linq;
 using MathNet.Numerics.LinearAlgebra.Double;
 using System.Diagnostics;
 
-namespace Homies.SARP.Kinematics.Homies.SARP.Kinematics.Inverse
+namespace Homies.SARP.Kinematics.Inverse
 {
 
 	//TODO: 

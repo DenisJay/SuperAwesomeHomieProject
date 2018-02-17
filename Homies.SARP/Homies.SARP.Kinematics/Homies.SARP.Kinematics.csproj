@@ -47,8 +47,9 @@
   <ItemGroup>
     <Compile Include="Homies.SARP.Kinematics.Common\DHParameter.cs" />
     <Compile Include="Homies.SARP.Kinematics.Forward\IForwardKinematics.cs" />
-    <Compile Include="Homies.SARP.Kinematics.Forward\Kinematics.cs" />
-    <Compile Include="Homies.SARP.Kinematics.Forward\RobotKinematics.cs" />
+    <Compile Include="Homies.SARP.Kinematics.Forward\ForwardKinematics.cs" />
+    <Compile Include="Homies.SARP.Kinematics\RobotKinematics.cs" />
+    <Compile Include="Homies.SARP.Kinematics.Inverse\IInverseKinematics.cs" />
     <Compile Include="Homies.SARP.Kinematics.Inverse\InverseKinematics.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -66,6 +67,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Homies.SARP.Mathematics.Transformations;
 using MathNet.Numerics.LinearAlgebra.Double;
 
@@ -10,10 +6,10 @@ namespace Homies.SARP.Kinematics.Common
 {
     /// <summary>
     /// Denevit-Hartenberg Parameters define transformations inside a kinematic chain.
-    /// Alpha is used to rotate around the current X-Axis.
-    /// A is the distance in X.
     /// D is the distance in Z.
     /// Theta is used to rotate around the new Z-Axis.
+    /// A is the distance in X.
+    /// Alpha is used to rotate around the current X-Axis.
     /// </summary>
     public class DHParameter
     {
@@ -50,14 +46,14 @@ namespace Homies.SARP.Kinematics.Common
             double ca = Math.Cos(Alpha);
             double sa = Math.Sin(Alpha);
 
-			_jointTransform.DenseMatrix = DenseMatrix.OfArray(new double[,]
-			{
-				{   ct,   -st,   0,     A},
-				{ca*st, ca*ct, -sa, -D*sa},
-				{sa*st, sa*ct,  ca,  D*ca},
-				{    0,     0,   0,     1}
-			});
-		}
+            _jointTransform.DenseMatrix = DenseMatrix.OfArray(new double[,]
+            {
+                {   ct,   -st,   0,     A},
+                {ca*st, ca*ct, -sa, -D*sa},
+                {sa*st, sa*ct,  ca,  D*ca},
+                {    0,     0,   0,     1}
+            });
+        }
 
 		private void GetStandardTransformation()
 		{
@@ -77,8 +73,6 @@ namespace Homies.SARP.Kinematics.Common
 
         #region PROPERTIES
 
-        //TODO: Wieso sind Theta und D public settable?
-		// variable achskonfiguration
         public double Theta
         {
             get { return _theta; }
@@ -103,15 +97,15 @@ namespace Homies.SARP.Kinematics.Common
             set { _d = value; }
         }
 
-		public TransformationMatrix JointTransform
-		{
-			get
-			{
-				GetJointTransformation();
+        public TransformationMatrix JointTransform
+        {
+            get
+            {
+                GetJointTransformation();
                 return _jointTransform;
-			}
-			private set { _jointTransform = value; }
-		}
+            }
+            private set { _jointTransform = value; }
+        }
 
 		public TransformationMatrix JointStandardTransform
 		{
