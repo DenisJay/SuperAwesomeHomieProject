@@ -38,7 +38,7 @@ namespace Homies.SARP.UnitTest.KinematicsTest
             _testRobot.Joints[0].DhParameter.Theta = testAngleRad;
 			TransformationMatrix currentRobotTarget = _testRobot.CurrentTarget;
 
-			List<double> angles = _inverse.GetInverseKinematics(currentRobotTarget, _dhParam);
+			List<double> angles = _inverse.GetAxisValues(currentRobotTarget, _dhParam);
 
 			Assert.IsTrue(angles[0].DoubleEquals(testAngleDeg));
 		}
