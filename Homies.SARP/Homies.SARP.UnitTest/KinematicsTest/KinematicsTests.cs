@@ -4,7 +4,6 @@ using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MathNet.Numerics.LinearAlgebra.Double;
 using Homies.SARP.Common.Extensions;
-using Homies.SARP.Common.Homies.SARP.Common.Extensions;
 using Homies.SARP.Kinematics.Common;
 using Homies.SARP.Machines.Factories;
 using Homies.SARP.Mathematics.Transformations;
@@ -25,7 +24,7 @@ namespace Homies.SARP.UnitTest.KinematicsTest
         }
 
         /// <summary>
-        /// Testing the forward kinematic for one joint.
+        /// Testing the forward kinematic with one joint.
         /// </summary>
         [TestMethod]
         public void TestForwardKinematicWith1Joint()
@@ -65,7 +64,7 @@ namespace Homies.SARP.UnitTest.KinematicsTest
         }
 
         /// <summary>
-        /// Testing the forward kinematic for one joint.
+        /// Testing the forward kinematic with two joints.
         /// </summary>
         [TestMethod]
         public void TestForwardKinematicWith2Joints()
@@ -101,7 +100,48 @@ namespace Homies.SARP.UnitTest.KinematicsTest
 
             Assert.IsTrue(offset[0].DoubleEquals(0));
             Assert.IsTrue(offset[1].DoubleEquals(-500));
-            Assert.IsTrue(offset[2].DoubleEquals(500));                        
+            Assert.IsTrue(offset[2].DoubleEquals(500));
+        }
+
+        /// <summary>
+        /// Testing the forward kinematic with three joints.
+        /// </summary>
+        [TestMethod]
+        public void TestForwardKinematicWith3Joints()
+        {
+            //Arrange
+            var dhParams = new List<DHParameter>
+            {
+                new DHParameter(Math.PI, 0, 0, -675),
+                new DHParameter(Math.PI / 2, 350, -Math.PI / 2, 0),
+                new DHParameter(0, 1150, 0, 0)
+            };
+
+            //Act
+            var kinematic = new Kin.RobotKinematics(dhParams);
+            var forwardMatrix = kinematic.GetForwardTransformationMatrix();
+
+            //Assert
+            var xAxis = forwardMatrix.Column(0);
+            var yAxis = forwardMatrix.Column(1);
+            var zAxis = forwardMatrix.Column(2);
+            var offset = forwardMatrix.Column(3);
+
+            Assert.IsTrue(xAxis[0].DoubleEquals(0));
+            Assert.IsTrue(xAxis[1].DoubleEquals(1));
+            Assert.IsTrue(xAxis[2].DoubleEquals(0));
+
+            Assert.IsTrue(yAxis[0].DoubleEquals(0));
+            Assert.IsTrue(yAxis[1].DoubleEquals(0));
+            Assert.IsTrue(yAxis[2].DoubleEquals(-1));
+
+            Assert.IsTrue(zAxis[0].DoubleEquals(-1));
+            Assert.IsTrue(zAxis[1].DoubleEquals(0));
+            Assert.IsTrue(zAxis[2].DoubleEquals(0));
+
+            Assert.IsTrue(offset[0].DoubleEquals(0));
+            Assert.IsTrue(offset[1].DoubleEquals(1500));
+            Assert.IsTrue(offset[2].DoubleEquals(-675));
         }
 
         #region CheckDHParameter
