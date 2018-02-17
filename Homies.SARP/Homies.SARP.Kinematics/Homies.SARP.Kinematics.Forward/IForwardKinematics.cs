@@ -1,5 +1,6 @@
 ﻿using Homies.SARP.Kinematics.Common;
 using Homies.SARP.Mathematics.Transformations;
+using MathNet.Numerics.LinearAlgebra.Double;
 using System.Collections.Generic;
 
 namespace Homies.SARP.Kinematics.Forward
@@ -10,5 +11,9 @@ namespace Homies.SARP.Kinematics.Forward
 		TransformationMatrix GetTerminalFrame(List<DHParameter> joints, List<double> jointValues);
 		int GetStatus(List<DHParameter> joints, List<double> jointValues);
 		int GetTurn(List<DHParameter> joints, List<double> jointValues);
-	}
+
+        DenseMatrix GetForwardTransformationMatrix();
+
+
+    }
 }

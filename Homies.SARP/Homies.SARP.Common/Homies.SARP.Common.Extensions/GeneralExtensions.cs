@@ -13,8 +13,7 @@ namespace Homies.SARP.Common.Extensions
 
         #region Const
 
-        // Wenn ich Tolerance = 1/10000 schreibe, ist es 0. Wieso ist das so?
-        const double Tolerance = 0.0001;
+        public const double tolerance = 0.0001;
 
         #endregion
 
@@ -41,7 +40,6 @@ namespace Homies.SARP.Common.Extensions
 
         public static bool DoubleEquals(this double val1, double val2)
         {
-            const double tolerance = 0.0001;
 
             if (Math.Abs(val1 - val2) < tolerance)
             {
@@ -52,20 +50,20 @@ namespace Homies.SARP.Common.Extensions
 
         }
 
-		public static double L2Norm(this double[] values)
-		{
-			if (values == null || values.Length == 0)
-			{
-				return 0;
-			}
+        public static double L2Norm(this double[] values)
+        {
+            if (values == null || values.Length == 0)
+            {
+                return 0;
+            }
 
-			double squaredSum = 0;
-			foreach (var value in values)
-			{
-				squaredSum += Math.Pow(value, 2);
-			}
+            double squaredSum = 0;
+            foreach (var value in values)
+            {
+                squaredSum += Math.Pow(value, 2);
+            }
 
-			return Math.Sqrt(squaredSum);
-		}
+            return Math.Sqrt(squaredSum);
+        }
     }
 }

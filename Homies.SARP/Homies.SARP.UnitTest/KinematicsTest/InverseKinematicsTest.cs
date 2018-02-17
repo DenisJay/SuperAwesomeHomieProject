@@ -9,7 +9,7 @@ using Homies.SARP.Mathematics.Transformations;
 using MathNet.Numerics.LinearAlgebra.Double;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Homies.SARP.Machines.MachineStructures;
-using Homies.SARP.Kinematics.Homies.SARP.Kinematics.Inverse;
+using Homies.SARP.Kinematics.Inverse;
 using Homies.SARP.Common.Extensions;
 using Homies.SARP.Kinematics.Common;
 
@@ -38,7 +38,7 @@ namespace Homies.SARP.UnitTest.KinematicsTest
             _testRobot.Joints[0].DhParameter.Theta = testAngleRad;
 			TransformationMatrix currentRobotTarget = _testRobot.CurrentTarget;
 
-			List<double> angles = _inverse.GetInverseKinematics(currentRobotTarget, _dhParam);
+			List<double> angles = _inverse.GetAxisValues(currentRobotTarget, _dhParam);
 			//TODO: Something is up with the sign.
 			Assert.IsTrue(angles[0].DoubleEquals(testAngleDeg));
 		}
