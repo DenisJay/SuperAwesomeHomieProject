@@ -63,12 +63,29 @@ namespace Homies.SARP.Kinematics.Inverse
 
 		private void ComputeAngle23Solutions(TransformationMatrix targetMatrix, List<DHParameter> dhParam)
 		{
+			// this whole crowd looks suspicius except for these ... angles
+			// TODO: needs more commenting and finalization.
 			var rootToAxis2Trans = new TransformationMatrix(dhParam.First().JointTransform.DenseMatrix * dhParam[1].JointStandardTransform.DenseMatrix);
 
+			// this is the transformation from joint 2 to the wrist center point
 			TransformationMatrix wristToAxis2 = new TransformationMatrix( 
 				(DenseMatrix)rootToAxis2Trans.DenseMatrix.Inverse() * 
 				targetMatrix.DenseMatrix * 
 				(DenseMatrix)dhParam.Last().JointTransform.DenseMatrix.Inverse());
+			
+			double distanceXYPlane = Math.Sqrt(Math.Pow(wristToAxis2.Matrix3D.OffsetX, 2) + Math.Pow(wristToAxis2.Matrix3D.OffsetY, 2));
+			double distanceZDirection = wristToAxis2.Matrix3D.OffsetZ;
+
+			double c = Math.Sqrt(Math.Pow(distanceXYPlane, 2) + Math.Pow(distanceZDirection, 2));
+			double b = dhParam[2].A;
+			double a = Math.Sqrt(Math.Pow(dhParam[3].A, 2) + Math.Pow(dhParam[3].D, 2));
+			
+			double angle1 = Math.Acos(Math.Pow(a,2) - Math.Pow(b, 2) - Math.Pow(c, 2)) / (-2 * c * b);
+			double angle2 = Math.Acos(Math.Pow(c, 2) - Math.Pow(b, 2) - Math.Pow(a, 2)) / (-2 * b * a);
+
+
+			continue here mate
+
 
 			Debug.Print("\n" + wristToAxis2);
 
