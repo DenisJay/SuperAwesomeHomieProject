@@ -83,10 +83,6 @@ namespace Homies.SARP.Kinematics.Inverse
 			double angle1 = Math.Acos(Math.Pow(a,2) - Math.Pow(b, 2) - Math.Pow(c, 2)) / (-2 * c * b);
 			double angle2 = Math.Acos(Math.Pow(c, 2) - Math.Pow(b, 2) - Math.Pow(a, 2)) / (-2 * b * a);
 
-
-			continue here mate
-
-
 			Debug.Print("\n" + wristToAxis2);
 
 			Console.WriteLine("Do some computation here");

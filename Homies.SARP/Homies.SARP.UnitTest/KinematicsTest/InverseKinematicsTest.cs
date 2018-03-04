@@ -42,5 +42,22 @@ namespace Homies.SARP.UnitTest.KinematicsTest
 
 			Assert.IsTrue(angles[0].DoubleEquals(testAngleDeg));
 		}
+
+		[TestMethod]
+		public void GetAnglesAxis1To3FromTargetFrame()
+		{
+			double degToRad = Math.PI / 180;
+			double[] testAnglesRad = { 13 * degToRad, -99 * degToRad, 21 * degToRad};
+
+			for (int i = 0; i < testAnglesRad.Length; i++)
+			{
+				_testRobot.Joints[i].DhParameter.Theta = testAnglesRad[i];
+			}
+
+			TransformationMatrix currentRobotTarget = _testRobot.CurrentTarget;
+			double[] angles = _inverse.GetAxisValues(currentRobotTarget, _dhParam).ToArray();
+
+			Assert.IsTrue(angles.DoublesEqual(testAnglesRad));
+		}
 	}
 }

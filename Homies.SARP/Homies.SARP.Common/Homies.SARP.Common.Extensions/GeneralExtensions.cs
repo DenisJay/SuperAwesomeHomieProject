@@ -37,6 +37,29 @@ namespace Homies.SARP.Common.Extensions
         {
             return !IsAFreaking<T>(obj);
         }
+		
+		public static bool DoublesEqual(this double[] vals1, double[] vals2)
+		{
+			if (vals1 == null || vals2 == null)
+			{
+				return false;
+			}
+
+			if (vals1.Length != vals2.Length)
+			{
+				return false;
+			}
+
+			for (int i = 0; i < vals1.Length; i++)
+			{
+				if (Math.Abs(vals1[i] - vals2[i]) > tolerance)
+				{
+					return false;
+				}
+			}
+
+			return true;
+		}
 
         public static bool DoubleEquals(this double val1, double val2)
         {
