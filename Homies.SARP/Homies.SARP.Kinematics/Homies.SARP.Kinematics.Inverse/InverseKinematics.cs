@@ -33,7 +33,6 @@ namespace Homies.SARP.Kinematics.Inverse
 			ComputeAngle1Solutions(targetMatrix, dhParam);
 			ComputeAngle23Solutions(targetMatrix, dhParam);
 
-
 			returnAnglesForTest.Add(ResultAxisSolutions[0][0]);
 			
 
@@ -78,17 +77,14 @@ namespace Homies.SARP.Kinematics.Inverse
 			double distanceXYPlane = Math.Sqrt(Math.Pow(wristToAxis2.Matrix3D.OffsetY, 2) + Math.Pow(wristToAxis2.Matrix3D.OffsetZ, 2));
 			double distanceZDirection = wristToAxis2.Matrix3D.OffsetX;
 
-			double c = Math.Sqrt(Math.Pow(distanceXYPlane, 2) + Math.Pow(distanceZDirection, 2));
-			double b = dhParam[2].A;
 			double a = Math.Sqrt(Math.Pow(dhParam[3].A, 2) + Math.Pow(dhParam[3].D, 2));
-
-			double pythagoras = Math.Sqrt(Math.Pow(a,2) + Math.Pow(b,2));
+			double b = dhParam[2].A;
+			double c = Math.Sqrt(Math.Pow(distanceXYPlane, 2) + Math.Pow(distanceZDirection, 2));
 
 			double angle1 = Math.Acos((Math.Pow(a,2) - Math.Pow(b, 2) - Math.Pow(c, 2)) / (-2 * c * b));
 			double angle2 = Math.Acos((Math.Pow(c, 2) - Math.Pow(b, 2) - Math.Pow(a, 2)) / (-2 * b * a));
 
-			double angle1Deg = angle1.RadToDeg();
-			double angle2Deg = angle2.RadToDeg();
+			double angle2Deg = 90-angle2.RadToDeg();
 
 			double flipFlapLookForward = Math.Atan2(distanceZDirection, 1 * distanceXYPlane);
 			double flipFlapLookBackward = Math.Atan2(distanceZDirection, -1 * distanceXYPlane);
@@ -104,14 +100,14 @@ namespace Homies.SARP.Kinematics.Inverse
 			double lookBackwardSolution4 = angle2 - Math.PI * 3/2;
 
 			ResultAxisSolutions.Add(new double[] {
-				lookForwardSolution1.RadToDeg(),
-				lookForwardSolution2.RadToDeg() - 1.9568445888303185, //TODO: find out why offset is there!!!
-				lookForwardSolution3.RadToDeg(),
-				lookForwardSolution4.RadToDeg(),
-				lookBackwardSolution1.RadToDeg(),
-				lookBackwardSolution2.RadToDeg(),
-				lookBackwardSolution3.RadToDeg(),
-				lookBackwardSolution4.RadToDeg(),
+				lookForwardSolution1.RadToDeg() - dhParam[1].AngleOffset,
+				lookForwardSolution2.RadToDeg() - dhParam[2].AngleOffset,
+				lookForwardSolution3.RadToDeg() - dhParam[1].AngleOffset,
+				lookForwardSolution4.RadToDeg() - dhParam[2].AngleOffset,
+				lookBackwardSolution1.RadToDeg() - dhParam[1].AngleOffset,
+				lookBackwardSolution2.RadToDeg() - dhParam[2].AngleOffset,
+				lookBackwardSolution3.RadToDeg() - dhParam[1].AngleOffset,
+				lookBackwardSolution4.RadToDeg() - dhParam[2].AngleOffset,
 			});
 		}
 	}

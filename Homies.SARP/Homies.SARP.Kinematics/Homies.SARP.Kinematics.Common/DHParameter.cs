@@ -24,6 +24,8 @@ namespace Homies.SARP.Kinematics.Common
 		double _thetaStandard;
 		double _dStandard;
 
+		double _angleOffset;
+
 		TransformationMatrix _jointTransform = new TransformationMatrix();
 		TransformationMatrix _jointStandardTransform = new TransformationMatrix();
 
@@ -37,7 +39,13 @@ namespace Homies.SARP.Kinematics.Common
             Alpha = alpha;
             Theta = theta;
 			_thetaStandard = theta;
+			AngleOffset = 0;
         }
+
+		public DHParameter(double alpha, double a, double theta, double d, double angleOffset):this(alpha, a, theta, d)
+		{
+			AngleOffset = angleOffset;
+		}
 
         private void GetJointTransformation()
         {
@@ -115,6 +123,12 @@ namespace Homies.SARP.Kinematics.Common
 				return _jointStandardTransform;
 			}
 			private set { _jointStandardTransform = value; }
+		}
+
+		public double AngleOffset
+		{
+			get { return _angleOffset; }
+			private set { _angleOffset = value; }
 		}
 
 		#endregion //PROPERTIES

@@ -47,7 +47,8 @@ namespace Homies.SARP.UnitTest.KinematicsTest
 		public void GetAnglesAxis1To3FromTargetFrame()
 		{
 			double degToRad = Math.PI / 180;
-			double[] testAnglesRad = { 12.54 * degToRad, -112.4563 * degToRad, 11.6548 * degToRad};
+			double[] testAnglesDeg = { 0, -90, 0};
+			double[] testAnglesRad = { 0 * degToRad, -90 * degToRad, 0 * degToRad};
 
 			for (int i = 0; i < testAnglesRad.Length; i++)
 			{
@@ -55,9 +56,11 @@ namespace Homies.SARP.UnitTest.KinematicsTest
 			}
 
 			TransformationMatrix currentRobotTarget = _testRobot.CurrentTarget;
-			double[] angles = _inverse.GetAxisValues(currentRobotTarget, _dhParam).ToArray();
+			_inverse.GetAxisValues(currentRobotTarget, _dhParam).ToArray();
 
-			Assert.IsTrue(angles.DoublesEqual(testAnglesRad));
+			double[] angles = { _inverse.ResultAxisSolutions[0][0], _inverse.ResultAxisSolutions[1][0], _inverse.ResultAxisSolutions[1][1]};
+
+			Assert.IsTrue(angles.DoublesEqual(testAnglesDeg));
 		}
 	}
 }
