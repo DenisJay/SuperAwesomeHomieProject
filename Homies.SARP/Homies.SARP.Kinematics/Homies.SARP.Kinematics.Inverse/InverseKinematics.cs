@@ -105,7 +105,7 @@ namespace Homies.SARP.Kinematics.Inverse
 
 			ResultAxisSolutions.Add(new double[] {
 				lookForwardSolution1.RadToDeg(),
-				lookForwardSolution2.RadToDeg(),
+				lookForwardSolution2.RadToDeg() - 1.9568445888303185, //TODO: find out why offset is there!!!
 				lookForwardSolution3.RadToDeg(),
 				lookForwardSolution4.RadToDeg(),
 				lookBackwardSolution1.RadToDeg(),

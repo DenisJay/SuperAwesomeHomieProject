@@ -47,7 +47,7 @@ namespace Homies.SARP.UnitTest.KinematicsTest
 		public void GetAnglesAxis1To3FromTargetFrame()
 		{
 			double degToRad = Math.PI / 180;
-			double[] testAnglesRad = { 0 * degToRad, -90 * degToRad, 0 * degToRad};
+			double[] testAnglesRad = { 12.54 * degToRad, -112.4563 * degToRad, 11.6548 * degToRad};
 
 			for (int i = 0; i < testAnglesRad.Length; i++)
 			{
