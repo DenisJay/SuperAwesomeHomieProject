@@ -5,6 +5,7 @@ using Homies.SARP.Kinematics.Common;
 using System.Linq;
 using MathNet.Numerics.LinearAlgebra.Double;
 using System.Diagnostics;
+using Homies.SARP.Common.Extensions;
 
 namespace Homies.SARP.Kinematics.Inverse
 {
@@ -30,7 +31,8 @@ namespace Homies.SARP.Kinematics.Inverse
 			List<double> returnAnglesForTest = new List<double>();
 
 			ComputeAngle1Solutions(targetMatrix, dhParam);
-			//ComputeAngle23Solutions(targetMatrix, dhParam);
+			ComputeAngle23Solutions(targetMatrix, dhParam);
+
 
 			returnAnglesForTest.Add(ResultAxisSolutions[0][0]);
 			
@@ -73,21 +75,44 @@ namespace Homies.SARP.Kinematics.Inverse
 				targetMatrix.DenseMatrix * 
 				(DenseMatrix)dhParam.Last().JointTransform.DenseMatrix.Inverse());
 			
-			double distanceXYPlane = Math.Sqrt(Math.Pow(wristToAxis2.Matrix3D.OffsetX, 2) + Math.Pow(wristToAxis2.Matrix3D.OffsetY, 2));
-			double distanceZDirection = wristToAxis2.Matrix3D.OffsetZ;
+			double distanceXYPlane = Math.Sqrt(Math.Pow(wristToAxis2.Matrix3D.OffsetY, 2) + Math.Pow(wristToAxis2.Matrix3D.OffsetZ, 2));
+			double distanceZDirection = wristToAxis2.Matrix3D.OffsetX;
 
 			double c = Math.Sqrt(Math.Pow(distanceXYPlane, 2) + Math.Pow(distanceZDirection, 2));
 			double b = dhParam[2].A;
 			double a = Math.Sqrt(Math.Pow(dhParam[3].A, 2) + Math.Pow(dhParam[3].D, 2));
-			
-			double angle1 = Math.Acos(Math.Pow(a,2) - Math.Pow(b, 2) - Math.Pow(c, 2)) / (-2 * c * b);
-			double angle2 = Math.Acos(Math.Pow(c, 2) - Math.Pow(b, 2) - Math.Pow(a, 2)) / (-2 * b * a);
 
-			Debug.Print("\n" + wristToAxis2);
+			double pythagoras = Math.Sqrt(Math.Pow(a,2) + Math.Pow(b,2));
 
-			Console.WriteLine("Do some computation here");
+			double angle1 = Math.Acos((Math.Pow(a,2) - Math.Pow(b, 2) - Math.Pow(c, 2)) / (-2 * c * b));
+			double angle2 = Math.Acos((Math.Pow(c, 2) - Math.Pow(b, 2) - Math.Pow(a, 2)) / (-2 * b * a));
 
-			throw new NotImplementedException();
+			double angle1Deg = angle1.RadToDeg();
+			double angle2Deg = angle2.RadToDeg();
+
+			double flipFlapLookForward = Math.Atan2(distanceZDirection, 1 * distanceXYPlane);
+			double flipFlapLookBackward = Math.Atan2(distanceZDirection, -1 * distanceXYPlane);
+
+			double lookForwardSolution1 = Math.PI / 2 - (flipFlapLookForward + angle1);
+			double lookForwardSolution2 = Math.PI / 2 - angle2;
+			double lookForwardSolution3 = Math.PI / 2 - (flipFlapLookForward - angle1);
+			double lookForwardSolution4 = angle2 - Math.PI * 3 / 2;
+
+			double lookBackwardSolution1 = Math.PI / 2 - (flipFlapLookBackward + angle1);
+			double lookBackwardSolution2 = Math.PI / 2 - angle2;
+			double lookBackwardSolution3 = Math.PI / 2 - (flipFlapLookBackward - angle1);
+			double lookBackwardSolution4 = angle2 - Math.PI * 3/2;
+
+			ResultAxisSolutions.Add(new double[] {
+				lookForwardSolution1.RadToDeg(),
+				lookForwardSolution2.RadToDeg(),
+				lookForwardSolution3.RadToDeg(),
+				lookForwardSolution4.RadToDeg(),
+				lookBackwardSolution1.RadToDeg(),
+				lookBackwardSolution2.RadToDeg(),
+				lookBackwardSolution3.RadToDeg(),
+				lookBackwardSolution4.RadToDeg(),
+			});
 		}
 	}
 }

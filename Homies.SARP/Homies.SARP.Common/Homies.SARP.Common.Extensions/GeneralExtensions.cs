@@ -89,12 +89,12 @@ namespace Homies.SARP.Common.Extensions
             return Math.Sqrt(squaredSum);
         }
 
-		public static double DegToRad(double valueInDegree)
+		public static double DegToRad(this double valueInDegree)
 		{
 			return valueInDegree * Math.PI / 180;
 		}
 
-		public static double RadToDeg(double valueInRadian)
+		public static double RadToDeg(this double valueInRadian)
 		{
 			return valueInRadian * 180 / Math.PI;
 		}
