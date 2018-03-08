@@ -88,5 +88,15 @@ namespace Homies.SARP.Common.Extensions
 
             return Math.Sqrt(squaredSum);
         }
+
+		public static double DegToRad(double valueInDegree)
+		{
+			return valueInDegree * Math.PI / 180;
+		}
+
+		public static double RadToDeg(double valueInRadian)
+		{
+			return valueInRadian * 180 / Math.PI;
+		}
     }
 }
