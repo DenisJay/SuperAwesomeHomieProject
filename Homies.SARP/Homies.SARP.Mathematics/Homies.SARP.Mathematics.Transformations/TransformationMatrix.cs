@@ -122,5 +122,22 @@ namespace Homies.SARP.Mathematics.Transformations
         {
             return base.GetHashCode();
         }
-    }
+
+		public static TransformationMatrix operator *(TransformationMatrix matrix1, TransformationMatrix matrix2)
+		{
+			DenseMatrix resMatrix = matrix1.DenseMatrix * matrix2.DenseMatrix;
+			var resTransformationMatrix = new TransformationMatrix(resMatrix);
+			return resTransformationMatrix;
+		}
+
+		//TODO: implement inverse of the transformation matrix using the orthonoromal properties
+		// Inverse of the rotation part equals transpose and inverse of the translation part equals -rotationTransposed * Translation
+		public TransformationMatrix GetInverse()
+		{
+			throw new NotImplementedException();
+		}
+
+
+
+	}
 }

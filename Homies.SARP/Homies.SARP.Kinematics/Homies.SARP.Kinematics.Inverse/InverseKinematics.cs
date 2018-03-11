@@ -110,5 +110,71 @@ namespace Homies.SARP.Kinematics.Inverse
 				lookBackwardSolution4.RadToDeg() - dhParam[2].AngleOffset,
 			});
 		}
+
+		private void ComputeAngle456Solutions(TransformationMatrix targetMatrix, List<DHParameter> dhParam)
+		{
+			//TODO: this is only temporary to check the correctness of the algorithm
+			var tempRes = dhParam[0].JointTransform.DenseMatrix *
+			dhParam[1].JointTransform.DenseMatrix *
+			dhParam[2].JointTransform.DenseMatrix;
+			var rotMat4To6 = tempRes.Inverse() * targetMatrix.DenseMatrix;
+
+			double R33 = rotMat4To6[2, 2];
+			double R32 = rotMat4To6[2, 1];
+			double R31 = rotMat4To6[2, 0];
+			double R23 = rotMat4To6[1, 2];
+			double R13 = rotMat4To6[0, 2];
+
+			double[] theta4 = new double[2];
+			double[] theta5 = new double[2];
+			double[] theta6 = new double[2];
+
+			if (!R33.Equals(1.0))
+			{
+				theta5[0] = Math.Acos(R33);
+				theta5[1] = -Math.Acos(R33);
+			}
+
+			if (Math.Sin(theta5[0]).Equals(0.0))
+			{
+				theta4[0] = -Math.Atan2(R23, -R13);
+			}
+			else
+			{
+				theta4[0] = -Math.Atan2(R23 / Math.Sin(theta5[0]), -R13 / Math.Sin(theta5[0]));
+			}
+
+			if (Math.Sin(theta5[1]).Equals(0.0))
+			{
+				theta4[1] = -Math.Atan2(R23, -R13);
+			}
+			else
+			{
+				theta4[1] = -Math.Atan2(R23 / Math.Sin(theta5[1]), -R13 / Math.Sin(theta5[1]));
+			}
+
+			if (Math.Sin(theta5[0]).Equals(0.0))
+			{
+				theta6[0] = Math.Atan2(-R32, R31);
+			}
+			else
+			{
+				theta6[0] = Math.Atan2(-R32 / Math.Sin(theta5[0]), R31 / Math.Sin(theta5[0]));
+			}
+
+			if (Math.Sin(theta5[1]).Equals(0.0))
+			{
+				theta6[1] = Math.Atan2(-R32, R31);
+			}
+			else
+			{
+				theta6[1] = Math.Atan2(-R32 / Math.Sin(theta5[1]), R31 / Math.Sin(theta5[1]));
+			}
+
+			ResultAxisSolutions.Add(new double[] { theta4[0].RadToDeg(), theta4[1].RadToDeg() });
+			ResultAxisSolutions.Add(new double[] { theta5[0].RadToDeg(), theta5[1].RadToDeg() });
+			ResultAxisSolutions.Add(new double[] { theta6[0].RadToDeg(), theta6[1].RadToDeg() });
+		}
+
 	}
 }
