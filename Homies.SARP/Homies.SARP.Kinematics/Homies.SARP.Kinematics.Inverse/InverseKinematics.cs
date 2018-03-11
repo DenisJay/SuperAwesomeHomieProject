@@ -110,10 +110,16 @@ namespace Homies.SARP.Kinematics.Inverse
 		private void ComputeAngle456Solutions(TransformationMatrix targetMatrix, List<DHParameter> dhParam)
 		{
 			//TODO: this is only temporary to check the correctness of the algorithm
+			var tempTarget = targetMatrix.DenseMatrix * Transformations.GetRotMatrixY(Math.PI);
+			Debug.Print(tempTarget.ToString());
+
 			var tempRes = dhParam[0].JointTransform.DenseMatrix *
 			dhParam[1].JointTransform.DenseMatrix *
-			dhParam[2].JointTransform.DenseMatrix;
-			var rotMat4To6 = tempRes.Inverse() * targetMatrix.DenseMatrix;
+			dhParam[2].JointTransform.DenseMatrix * Transformations.GetRotMatrixX(-Math.PI / 2);
+			Debug.Print(tempRes.ToString());
+
+			var rotMat4To6 = tempRes.Inverse() * tempTarget;
+			Debug.Print(rotMat4To6.ToString());
 
 			double R33 = rotMat4To6[2, 2];
 			double R32 = rotMat4To6[2, 1];
