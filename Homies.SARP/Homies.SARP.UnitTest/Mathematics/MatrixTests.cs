@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Windows.Media.Media3D;
-using Homies.SARP.Mathematics.Transformations;
-using MathNet.Numerics.LinearAlgebra.Double;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MathNet.Numerics.LinearAlgebra;
+using MathNet.Numerics.LinearAlgebra.Double;
 using Homies.SARP.Common.Extensions;
+using Homies.SARP.Mathematics.Transformations;
 
 namespace Homies.SARP.UnitTest.Mathematics
 {
@@ -19,7 +19,6 @@ namespace Homies.SARP.UnitTest.Mathematics
 		Vector _testVector;
 		Vector _testPoint;
 		#endregion
-
 
 		#region CONSTRUCT
 

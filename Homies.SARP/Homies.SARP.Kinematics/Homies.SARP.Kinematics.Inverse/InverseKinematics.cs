@@ -26,20 +26,16 @@ namespace Homies.SARP.Kinematics.Inverse
 			ResultAxisValues = new List<double>();
 		}
 
-		public List<double> GetAxisValues(TransformationMatrix targetMatrix, List<DHParameter> dhParam)
+		public void GetAxisValues(TransformationMatrix targetMatrix, List<DHParameter> dhParam)
 		{
 			List<double> returnAnglesForTest = new List<double>();
 
 			ComputeAngle1Solutions(targetMatrix, dhParam);
 			ComputeAngle23Solutions(targetMatrix, dhParam);
-
-			returnAnglesForTest.Add(ResultAxisSolutions[0][0]);
+			ComputeAngle456Solutions(targetMatrix, dhParam);
 			
-
 			//TODO: Implement "ChooseValidConfiguration()"
 			//ChooseValidConfiguration()
-
-			return returnAnglesForTest;
 		}
 
 		/// <summary>

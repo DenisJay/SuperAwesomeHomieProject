@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Homies.SARP.Mathematics", "Homies.SARP.Mathematics\Homies.SARP.Mathematics.csproj", "{6CF733A3-4854-4550-AA38-CF8F378C8F29}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Homies.SARP.Machines", "Homies.SARP.Machines\Homies.SARP.Machines.csproj", "{10BF2D83-0333-4090-BDD3-E62AFD1B9229}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Homies.SARP.Common", "Homies.SARP.Common\Homies.SARP.Common.csproj", "{87913AB1-E243-47B7-AA75-E1A0DF960BA6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Homies.SARP.Console", "Homies.SARP.Console\Homies.SARP.Console.csproj", "{49153623-3658-4021-B4A4-58348595B24C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{87913AB1-E243-47B7-AA75-E1A0DF960BA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87913AB1-E243-47B7-AA75-E1A0DF960BA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87913AB1-E243-47B7-AA75-E1A0DF960BA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49153623-3658-4021-B4A4-58348595B24C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49153623-3658-4021-B4A4-58348595B24C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49153623-3658-4021-B4A4-58348595B24C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49153623-3658-4021-B4A4-58348595B24C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
