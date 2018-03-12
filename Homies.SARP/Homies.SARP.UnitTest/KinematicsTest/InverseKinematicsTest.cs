@@ -46,7 +46,7 @@ namespace Homies.SARP.UnitTest.KinematicsTest
 		[TestMethod]
 		public void GetAnglesAxis1To3FromTargetFrame()
 		{
-			double[] testAnglesDeg = { 0, -90, 0, 0, 10, 0};
+			double[] testAnglesDeg = { 0, -90, 0, 3.564, 5.3452, 9.4653543};
 			double[] testAnglesRad = {
 				testAnglesDeg[0].DegToRad(),
 				testAnglesDeg[1].DegToRad(),
