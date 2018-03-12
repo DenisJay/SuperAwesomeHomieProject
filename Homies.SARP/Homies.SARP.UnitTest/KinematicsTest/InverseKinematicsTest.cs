@@ -27,6 +27,7 @@ namespace Homies.SARP.UnitTest.KinematicsTest
 		{
 			_dhParam = DHParameterFactory.GetDhParameterForRobot(RobotModels.Kuka_KR270_R2700);
 			_testRobot = new Robot("testRobi", _dhParam);
+			_testRobot.SetJoint6ToFlangeTcpTrafo(RobotManufacturer.Kuka);
 			_inverse = new InverseKinematics();
 		}
 
@@ -46,7 +47,7 @@ namespace Homies.SARP.UnitTest.KinematicsTest
 		[TestMethod]
 		public void GetAnglesAxis1To3FromTargetFrame()
 		{
-			double[] testAnglesDeg = { 0, -90, 0, 3.564, 5.3452, 9.4653543};
+			double[] testAnglesDeg = { 0, -90, 0, 0, 0, 0};
 			double[] testAnglesRad = {
 				testAnglesDeg[0].DegToRad(),
 				testAnglesDeg[1].DegToRad(),
@@ -66,7 +67,13 @@ namespace Homies.SARP.UnitTest.KinematicsTest
 
 			_inverse.GetAxisValues(currentRobotTarget, _dhParam);
 
-			double[] angles = { _inverse.ResultAxisSolutions[0][0], _inverse.ResultAxisSolutions[1][0], _inverse.ResultAxisSolutions[1][1]};
+			double[] angles = { _inverse.ResultAxisSolutions[0][0],
+				_inverse.ResultAxisSolutions[1][0],
+				_inverse.ResultAxisSolutions[1][1],
+				_inverse.ResultAxisSolutions[2][0],
+				_inverse.ResultAxisSolutions[3][0],
+				_inverse.ResultAxisSolutions[4][0],
+			};
 
 			Assert.IsTrue(angles.DoublesEqual(testAnglesDeg));
 		}

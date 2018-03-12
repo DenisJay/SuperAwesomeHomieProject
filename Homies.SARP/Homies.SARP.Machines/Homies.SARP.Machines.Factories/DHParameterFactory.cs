@@ -44,8 +44,6 @@ namespace Homies.SARP.Machines.Factories
 					break;
 			}
 
-
-
 			return parameter;
 		}
 

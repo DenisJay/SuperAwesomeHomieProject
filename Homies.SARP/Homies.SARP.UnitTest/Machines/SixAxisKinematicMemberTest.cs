@@ -22,6 +22,7 @@ namespace Homies.SARP.UnitTest.Machines
 		public void Initialization()
 		{
 			_testRobot = new Robot("testRobi", DHParameterFactory.GetDhParameterForRobot(RobotModels.Kuka_KR270_R2700));
+			_testRobot.SetJoint6ToFlangeTcpTrafo(RobotManufacturer.Kuka);
 		}
 
 		[TestMethod]

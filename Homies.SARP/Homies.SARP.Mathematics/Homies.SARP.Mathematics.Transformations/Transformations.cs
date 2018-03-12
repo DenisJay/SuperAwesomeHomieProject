@@ -6,6 +6,11 @@ namespace Homies.SARP.Mathematics.Transformations
 {
 	public static class Transformations
 	{
+		public static DenseMatrix GetIdentityMatrix()
+		{
+			return DenseMatrix.CreateIdentity(4);
+		}
+
 		/// <summary>
 		/// Returns a rotation matrix rotated around the x axis
 		/// </summary>

@@ -57,7 +57,6 @@ namespace Homies.SARP.Kinematics.Inverse
 			ResultAxisSolutions.Add(new double[] { angleDeg1Plus, angleDeg1Minus });
 		}
 
-
 		private void ComputeAngle23Solutions(TransformationMatrix targetMatrix, List<DHParameter> dhParam)
 		{
 			// this whole crowd looks suspicius except for these ... angles
@@ -110,20 +109,17 @@ namespace Homies.SARP.Kinematics.Inverse
 		private void ComputeAngle456Solutions(TransformationMatrix targetMatrix, List<DHParameter> dhParam)
 		{
 			//TODO: this is only temporary to check the correctness of the algorithm
-			var tempTarget = targetMatrix.DenseMatrix * Transformations.GetRotMatrixY(Math.PI);
-			Debug.Print(tempTarget.ToString());
+			var target = targetMatrix.DenseMatrix;
 
 			var tempRes = dhParam[0].JointTransform.DenseMatrix *
 			dhParam[1].JointTransform.DenseMatrix *
-			dhParam[2].JointTransform.DenseMatrix;// * Transformations.GetRotMatrixX(-Math.PI / 2);
-			Debug.Print(tempRes.ToString());
+			dhParam[2].JointTransform.DenseMatrix;
 
-			var rotMat4To6 = tempRes.Inverse() * tempTarget;
-			Debug.Print(rotMat4To6.ToString());
-
+			var rotMat4To6 = tempRes.Inverse() * target;
+			
 			double R23 = rotMat4To6[1, 2];
-			double R32 = rotMat4To6[1, 1];
-			double R31 = rotMat4To6[1, 0];
+			double R22 = rotMat4To6[1, 1];
+			double R21 = rotMat4To6[1, 0];
 			double R33 = rotMat4To6[2, 2];
 			double R13 = rotMat4To6[0, 2];
 
@@ -157,20 +153,20 @@ namespace Homies.SARP.Kinematics.Inverse
 
 			if (Math.Sin(theta5[0]).Equals(0.0))
 			{
-				theta6[1] = Math.Atan2(-R32, R31);
+				theta6[1] = Math.Atan2(-R22, R21);
 			}
 			else
 			{
-				theta6[1] = Math.Atan2(-R32 / Math.Sin(theta5[0]), R31 / Math.Sin(theta5[0]));
+				theta6[1] = Math.Atan2(-R22 / Math.Sin(theta5[0]), R21 / Math.Sin(theta5[0]));
 			}
 
 			if (Math.Sin(theta5[1]).Equals(0.0))
 			{
-				theta6[0] = Math.Atan2(-R32, R31);
+				theta6[0] = Math.Atan2(-R22, R21);
 			}
 			else
 			{
-				theta6[0] = Math.Atan2(-R32 / Math.Sin(theta5[1]), R31 / Math.Sin(theta5[1]));
+				theta6[0] = Math.Atan2(-R22 / Math.Sin(theta5[1]), R21 / Math.Sin(theta5[1]));
 			}
 
 			ResultAxisSolutions.Add(new double[] { theta4[0].RadToDeg(), theta4[1].RadToDeg() });
