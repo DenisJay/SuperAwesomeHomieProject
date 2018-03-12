@@ -19,6 +19,9 @@ namespace Homies.SARP.Machines.MachineStructures
         SortedList<int, Joint> _joints;
         TransformationMatrix _currentTarget;
         TransformationMatrix _currentWristFrame;
+		//TODO: implement transformations
+		TransformationMatrix _joint6ToFlangeTrafo;
+		TransformationMatrix _tcpTrafo;
         #endregion //FIELDS
 
         #region INITIALIZATION
