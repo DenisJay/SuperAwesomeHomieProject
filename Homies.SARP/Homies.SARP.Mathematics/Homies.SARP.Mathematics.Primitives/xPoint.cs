@@ -11,8 +11,10 @@ namespace Homies.SARP.Mathematics.Primitives
 	public class XPoint
 	{
 		#region FIELDS
+
 		Point3D _mediaPoint3D = new Point3D(0, 0, 0);
 		DenseVector _densePoint = DenseVector.OfArray(new double[] { 0, 0, 0, 1 });
+		
 		#endregion // FIELDS
 
 		#region PROPERTIES
