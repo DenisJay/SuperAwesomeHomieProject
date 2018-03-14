@@ -16,7 +16,6 @@ namespace Homies.SARP.Kinematics.Inverse
 	// 3. When turn / status is specified choose correct angle
 	public class InverseKinematics
 	{
-
 		public List<double[]> ResultAxisSolutions { get; private set; }
 		public List<double> ResultAxisValues { get; private set; }
 
@@ -26,17 +25,32 @@ namespace Homies.SARP.Kinematics.Inverse
 			ResultAxisValues = new List<double>();
 		}
 
+
+
 		public void GetAxisValues(TransformationMatrix targetMatrix, List<DHParameter> dhParam)
 		{
-			List<double> returnAnglesForTest = new List<double>();
-
 			ComputeAngle1Solutions(targetMatrix, dhParam);
+			
 			ComputeAngle23Solutions(targetMatrix, dhParam);
+
 			ComputeAngle456Solutions(targetMatrix, dhParam);
 			
 			//TODO: Implement "ChooseValidConfiguration()"
 			//ChooseValidConfiguration()
 		}
+
+		public void GetAngles1To3(TransformationMatrix wristToAxis1, List<DHParameter> dhParam)
+		{
+			double angleDeg1Plus = Math.Atan2(wristToAxis1.Matrix3D.OffsetY, wristToAxis1.Matrix3D.OffsetX) * 180 / Math.PI;
+			double angleDeg1Minus = Math.Atan2(-wristToAxis1.Matrix3D.OffsetY, -wristToAxis1.Matrix3D.OffsetX) * 180 / Math.PI;
+			ResultAxisSolutions.Add(new double[] { angleDeg1Plus, angleDeg1Minus });
+
+
+		}
+
+
+
+		#region AngleComputations
 
 		/// <summary>
 		/// Very easy. look at the wrist point in the xy plane starting from standard axis 1 transformation
@@ -173,5 +187,8 @@ namespace Homies.SARP.Kinematics.Inverse
 			ResultAxisSolutions.Add(new double[] { theta5[0].RadToDeg(), theta5[1].RadToDeg() });
 			ResultAxisSolutions.Add(new double[] { theta6[0].RadToDeg(), theta6[1].RadToDeg() });
 		}
+
+		#endregion //AngleComputations
+
 	}
 }
