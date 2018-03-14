@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Media.Media3D;
 
-namespace Homies.SARP.Mathematics.Homies.SARP.Mathematics.Primitives
+namespace Homies.SARP.Mathematics.Primitives
 {
 	public class XVector
 	{

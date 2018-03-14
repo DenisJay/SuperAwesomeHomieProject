@@ -4,9 +4,11 @@ using MathNet.Numerics.LinearAlgebra.Double;
 using Homies.SARP.Machines.BaseStructure;
 using Homies.SARP.Mathematics.Transformations;
 using Homies.SARP.Kinematics.Common;
-using System;
 using Homies.SARP.Kinematics;
 using Homies.SARP.Machines.Factories;
+using Homies.SARP.Kinematics.Inverse;
+using Homies.SARP.Mathematics.Primitives;
+using Homies.SARP.Common.Extensions;
 
 namespace Homies.SARP.Machines.MachineStructures
 {
@@ -18,12 +20,16 @@ namespace Homies.SARP.Machines.MachineStructures
         string _modelName;
         SortedList<int, Joint> _joints;
         TransformationMatrix _currentTarget;
-        TransformationMatrix _currentWristFrame;
+		TransformationMatrix _target;
 
 		//TODO: implement transformations
 		TransformationMatrix _joint6ToFlangeTrafo;
 		List<TransformationMatrix> _tcpTrafos;
+
 		int _currentTCP;
+		int _currentBase;
+
+		InverseKinematics _invKin;
 
         #endregion //FIELDS
 
@@ -45,40 +51,12 @@ namespace Homies.SARP.Machines.MachineStructures
 			InitializeMember();
 			Joint6ToFlangeTrafo = RobotBaseDataProvider.GetJoint6ToFlangeTransformation(robotBrand);
 		}
-
-        public Robot(string name, List<DHParameter> dhParams)
-        {
-            ModelName = name;
-            Joints = new SortedList<int, Joint>();
-
-            for (int i = 0; i < dhParams.Count; i++)
-            {
-                Joints.Add(i, new RotationalJoint(0, 360, dhParams[i]));
-            }
-
-            Kinematic = new RobotKinematics(dhParams);
-			InitializeMember();
-        }
-
-		public Robot(string name, List<Joint> joints)
-        {
-            ModelName = name;
-            Joints = new SortedList<int, Joint>();
-
-            for (int i = 0; i < joints.Count; i++)
-            {
-                Joints.Add(i, joints[i]);
-            }
-
-            var dhParams = (List<DHParameter>) (from joint in Joints select joint.Value.DhParameter);
-            Kinematic = new RobotKinematics(dhParams);
-			InitializeMember();
-		}
 		
 		private void InitializeMember()
 		{
 			TcpTrafos = new List<TransformationMatrix>();
 			Joint6ToFlangeTrafo = new TransformationMatrix(Transformations.GetIdentityMatrix());
+			InvKin = new InverseKinematics();
 		}
 
 		public void SetJoint6ToFlangeTcpTrafo(RobotManufacturer roboManufacturer)
@@ -99,7 +77,7 @@ namespace Homies.SARP.Machines.MachineStructures
 
             foreach (var angle in degreeAngles)
             {
-                double radAngle = angle * Math.PI / 180;
+                double radAngle = angle.DegToRad();
                 int index = degreeAngles.IndexOf(angle);
                 Joints[index].JointValue = radAngle;
             }
@@ -117,24 +95,7 @@ namespace Homies.SARP.Machines.MachineStructures
                 Joints[radAngles.IndexOf(angle)].JointValue = angle;
             }
         }
-
-        private void ComputeCurrentWristFrame()
-        {
-			DenseMatrix addInverse = (DenseMatrix)Joints.Last().Value.JointTransformation.DenseMatrix * Joint6ToFlangeTrafo.DenseMatrix;
-
-
-			DenseMatrix wrist = CurrentTarget.DenseMatrix * (DenseMatrix)addInverse.Inverse();
-
-            if (_currentWristFrame == null)
-            {
-                _currentWristFrame = new TransformationMatrix(wrist);
-            }
-            else
-            {
-                _currentWristFrame.DenseMatrix = wrist;
-            }
-        }
-
+		
         private void ComputeCurrentTarget()
         {
             TransformationMatrix target = new TransformationMatrix();
@@ -154,11 +115,30 @@ namespace Homies.SARP.Machines.MachineStructures
             CurrentTarget = target;
         }
 
-        #endregion //METHODS
+		public void ComputeAnglesForTargetFrame(TransformationMatrix target)
+		{
+			var dhs = (from joint in Joints select joint.Value.DhParameter).ToList();
 
-        #region PROPERTIES
+			Target = target;
+			InvKin.GetAngles1To3(new XPoint(
+				TargetWrist.Matrix3D.OffsetX,
+				TargetWrist.Matrix3D.OffsetY, 
+				TargetWrist.Matrix3D.OffsetZ), dhs);
+		}
 
-        public string ModelName
+		private TransformationMatrix ComputeWristFrame(TransformationMatrix currentTarget)
+		{
+			DenseMatrix addInverse = (DenseMatrix)Joints.Last().Value.JointTransformation.DenseMatrix * Joint6ToFlangeTrafo.DenseMatrix;
+			DenseMatrix wrist = currentTarget.DenseMatrix * (DenseMatrix)addInverse.Inverse();
+
+			return new TransformationMatrix(wrist);
+		}
+
+		#endregion //METHODS
+
+		#region PROPERTIES
+
+		public string ModelName
         {
             get { return _modelName; }
             set { _modelName = value; }
@@ -177,23 +157,12 @@ namespace Homies.SARP.Machines.MachineStructures
                 ComputeCurrentTarget();
                 return _currentTarget;
             }
-            private set
-            {
-                _currentTarget = value;
-            }
+            private set { _currentTarget = value; }
         }
 
-        public TransformationMatrix CurrentWristFrame
+        public TransformationMatrix CurrentWrist
         {
-            get
-            {
-                ComputeCurrentWristFrame();
-                return _currentWristFrame;
-            }
-            private set
-            {
-                _currentWristFrame = value;
-            }
+            get { return ComputeWristFrame(CurrentTarget); }
         }
 
 		public TransformationMatrix Joint6ToFlangeTrafo
@@ -214,8 +183,21 @@ namespace Homies.SARP.Machines.MachineStructures
 			set { _currentTCP = value; }
 		}
 
+		public TransformationMatrix Target
+		{
+			get { return _target; }
+			private set { _target = value; }
+		}
+
+		public TransformationMatrix TargetWrist
+		{
+			get { return ComputeWristFrame(Target); }
+		}
+
+		public InverseKinematics InvKin { get => _invKin; set => _invKin = value; }
+
 		public RobotKinematics Kinematic;
 
-        #endregion //PROPERTIES        
+        #endregion //PROPERTIES
     }
 }

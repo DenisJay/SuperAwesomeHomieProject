@@ -6,13 +6,16 @@ using System.Linq;
 using System.Text;
 using System.Windows.Media.Media3D;
 
-namespace Homies.SARP.Mathematics.Homies.SARP.Mathematics.Primitives
+namespace Homies.SARP.Mathematics.Primitives
 {
 	public class XPoint
 	{
+		#region FIELDS
 		Point3D _mediaPoint3D = new Point3D(0, 0, 0);
 		DenseVector _densePoint = DenseVector.OfArray(new double[] { 0, 0, 0, 1 });
+		#endregion // FIELDS
 
+		#region PROPERTIES
 		public Point3D MediaPoint3D
 		{
 			get { return _mediaPoint3D; }
@@ -27,12 +30,12 @@ namespace Homies.SARP.Mathematics.Homies.SARP.Mathematics.Primitives
 			get { return _densePoint; }
 			set
 			{
-				if (value.Count != 3)
+				if (value.Count < 3)
 				{
 					throw new ArgumentOutOfRangeException("Vector has wrong dimension");
 				}
 
-				_densePoint = value;
+				_densePoint = DenseVector.OfArray(new double[] { value[0], value[1], value[2], 1 });
 				_mediaPoint3D = new Point3D(_densePoint[0], _densePoint[1], _densePoint[2]);
 			}
 		}
@@ -69,22 +72,37 @@ namespace Homies.SARP.Mathematics.Homies.SARP.Mathematics.Primitives
 
 		public double Length { get { return DensePoint3D.L2Norm(); } }
 
-		public XPoint(double x, double y, double z) : this(new Point3D(x, y, z)) { }
+		#endregion //PROPERTIES
+
+		#region INITIALIZATION
+
+		public XPoint(double x, double y, double z)
+		{
+			SetValues(x, y, z);
+		}
+
+		public XPoint(DenseVector point)
+		{
+			if (point.Count < 3 || point.Count > 4)
+			{
+				throw new ArgumentOutOfRangeException("Dimension of the point is not plausible.");
+			}
+
+			SetValues(point[0], point[1], point[2]);
+		}
 
 		public XPoint(Point3D point)
 		{
-			MediaPoint3D = point;
-			DensePoint3D = DenseVector.OfArray(new double[]
-			{
-				MediaPoint3D.X,
-				MediaPoint3D.Y,
-				MediaPoint3D.Z,
-				1
-			});
-
-			X = MediaPoint3D.X;
-			Y = MediaPoint3D.Y;
-			Z = MediaPoint3D.Z;
+			SetValues(point.X, point.Y, point.Z);
 		}
+
+		private void SetValues(double x, double y, double z)
+		{
+			MediaPoint3D = new Point3D(x, y, z);
+			DensePoint3D = DenseVector.OfArray(new double[] { x, y, z, 1});
+			X = x; Y = y; Z = z;
+		}
+
+		#endregion //INITIALIZATION
 	}
 }

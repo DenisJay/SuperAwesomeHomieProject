@@ -59,6 +59,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Homies.SARP.Common\Homies.SARP.Common.csproj">
+      <Project>{87913AB1-E243-47B7-AA75-E1A0DF960BA6}</Project>
+      <Name>Homies.SARP.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Homies.SARP.Kinematics\Homies.SARP.Kinematics.csproj">
       <Project>{bff9f5e1-0cc3-4a02-973c-7286e76ddc51}</Project>
       <Name>Homies.SARP.Kinematics</Name>

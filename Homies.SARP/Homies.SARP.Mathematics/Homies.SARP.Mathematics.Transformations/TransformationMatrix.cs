@@ -134,10 +134,7 @@ namespace Homies.SARP.Mathematics.Transformations
 		// Inverse of the rotation part equals transpose and inverse of the translation part equals -rotationTransposed * Translation
 		public TransformationMatrix GetInverse()
 		{
-			throw new NotImplementedException();
+			return new TransformationMatrix((DenseMatrix)this.DenseMatrix.Inverse());
 		}
-
-
-
 	}
 }

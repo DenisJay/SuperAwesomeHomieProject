@@ -21,7 +21,7 @@ namespace Homies.SARP.UnitTest.Machines
 		[TestInitialize]
 		public void Initialization()
 		{
-			_testRobot = new Robot("testRobi", DHParameterFactory.GetDhParameterForRobot(RobotModels.Kuka_KR270_R2700));
+			_testRobot = new Robot("testRobi", RobotManufacturer.Kuka, RobotModels.Kuka_KR270_R2700);
 			_testRobot.SetJoint6ToFlangeTcpTrafo(RobotManufacturer.Kuka);
 		}
 
@@ -29,7 +29,7 @@ namespace Homies.SARP.UnitTest.Machines
 		public void TestRobotTargetWristFrameInAlpha5()
 		{
 			TransformationMatrix target = _testRobot.CurrentTarget;
-			TransformationMatrix wrist = _testRobot.CurrentWristFrame;
+			TransformationMatrix wrist = _testRobot.CurrentWrist;
 
 			TransformationMatrix relToA5 = new TransformationMatrix((DenseMatrix)wrist.DenseMatrix.Inverse() * target.DenseMatrix);
 
@@ -46,7 +46,7 @@ namespace Homies.SARP.UnitTest.Machines
 			_testRobot.SetAnglesInDegree(new List<double>() { 33, -65, -30, 12.45, 34.123, 56.76 });
 			
 			TransformationMatrix target = _testRobot.CurrentTarget;
-			TransformationMatrix wrist = _testRobot.CurrentWristFrame;
+			TransformationMatrix wrist = _testRobot.CurrentWrist;
 
 			TransformationMatrix relToA5 = new TransformationMatrix((DenseMatrix)wrist.DenseMatrix.Inverse() * target.DenseMatrix);
 
@@ -74,7 +74,7 @@ namespace Homies.SARP.UnitTest.Machines
 			_testRobot.SetAnglesInDegree(randAngles);
 
 			TransformationMatrix target = _testRobot.CurrentTarget;
-			TransformationMatrix wrist = _testRobot.CurrentWristFrame;
+			TransformationMatrix wrist = _testRobot.CurrentWrist;
 
 			TransformationMatrix relToA5 = new TransformationMatrix((DenseMatrix)wrist.DenseMatrix.Inverse() * target.DenseMatrix);
 
