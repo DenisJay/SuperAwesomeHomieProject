@@ -120,10 +120,13 @@ namespace Homies.SARP.Machines.MachineStructures
 			var dhs = (from joint in Joints select joint.Value.DhParameter).ToList();
 
 			Target = target;
+
 			InvKin.GetAngles1To3(new XPoint(
 				TargetWrist.Matrix3D.OffsetX,
 				TargetWrist.Matrix3D.OffsetY, 
 				TargetWrist.Matrix3D.OffsetZ), dhs);
+
+			InvKin.GetAngles4To6(target, dhs);
 		}
 
 		private TransformationMatrix ComputeWristFrame(TransformationMatrix currentTarget)

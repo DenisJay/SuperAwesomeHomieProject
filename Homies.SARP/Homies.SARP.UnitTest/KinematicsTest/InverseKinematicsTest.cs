@@ -32,7 +32,7 @@ namespace Homies.SARP.UnitTest.KinematicsTest
 			_testRobot.SetJoint6ToFlangeTcpTrafo(RobotManufacturer.Kuka);
 			_inverse = new InverseKinematics();
 
-			testAnglesDeg = new double[] { 0, -90, 0, 0, 0, 0 };
+			testAnglesDeg = new double[] { 10, -80, 11, 12, 13, 14 };
 			testAnglesRad = new double[] {
 				testAnglesDeg[0].DegToRad(),
 				testAnglesDeg[1].DegToRad(),
@@ -53,11 +53,43 @@ namespace Homies.SARP.UnitTest.KinematicsTest
 		[TestMethod]
 		public void TestInverseKinematicAngle1()
 		{
-			TransformationMatrix currentRobotTarget = _testRobot.CurrentTarget;
-			Debug.Print(currentRobotTarget.DenseMatrix.ToString());
+			_testRobot.ComputeAnglesForTargetFrame(_testRobot.CurrentTarget);
+			Assert.IsTrue(testAnglesDeg[0].DoubleEquals(_testRobot.InvKin.ResultAxisSolutions[0][0]));
+		}
 
-			_testRobot.ComputeAnglesForTargetFrame(currentRobotTarget);
-			Assert.IsTrue(testAnglesDeg[0].Equals(_testRobot.InvKin.ResultAxisSolutions[0][0]));
+		[TestMethod]
+		public void TestInverseKinematicAngle2()
+		{
+			_testRobot.ComputeAnglesForTargetFrame(_testRobot.CurrentTarget);
+			Assert.IsTrue(testAnglesDeg[1].DoubleEquals(_testRobot.InvKin.ResultAxisSolutions[1][0]));
+		}
+
+		[TestMethod]
+		public void TestInverseKinematicAngle3()
+		{
+			_testRobot.ComputeAnglesForTargetFrame(_testRobot.CurrentTarget);
+			Assert.IsTrue(testAnglesDeg[2].DoubleEquals(_testRobot.InvKin.ResultAxisSolutions[2][0]));
+		}
+
+		[TestMethod]
+		public void TestInverseKinematicAngle4()
+		{
+			_testRobot.ComputeAnglesForTargetFrame(_testRobot.CurrentTarget);
+			Assert.IsTrue(testAnglesDeg[3].DoubleEquals(_testRobot.InvKin.ResultAxisSolutions[3][0]));
+		}
+
+		[TestMethod]
+		public void TestInverseKinematicAngle5()
+		{
+			_testRobot.ComputeAnglesForTargetFrame(_testRobot.CurrentTarget);
+			Assert.IsTrue(testAnglesDeg[4].DoubleEquals(_testRobot.InvKin.ResultAxisSolutions[4][0]));
+		}
+
+		[TestMethod]
+		public void TestInverseKinematicAngle6()
+		{
+			_testRobot.ComputeAnglesForTargetFrame(_testRobot.CurrentTarget);
+			Assert.IsTrue(testAnglesDeg[5].DoubleEquals(_testRobot.InvKin.ResultAxisSolutions[5][0]));
 		}
 	}
 }
