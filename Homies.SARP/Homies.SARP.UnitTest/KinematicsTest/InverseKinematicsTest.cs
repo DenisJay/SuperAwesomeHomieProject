@@ -32,7 +32,9 @@ namespace Homies.SARP.UnitTest.KinematicsTest
 			_testRobot.SetJoint6ToFlangeTcpTrafo(RobotManufacturer.Kuka);
 			_inverse = new InverseKinematics();
 
-			testAnglesDeg = new double[] { 10, -80, 11, 12, 13, 14 };
+			var rand = new Random(DateTime.Now.Millisecond);
+
+			testAnglesDeg = new double[] { 30 * rand.NextDouble(), -80 - 30*rand.NextDouble(), 30 * rand.NextDouble(), 30 * rand.NextDouble(), 30 * rand.NextDouble(), 30 * rand.NextDouble() };
 			testAnglesRad = new double[] {
 				testAnglesDeg[0].DegToRad(),
 				testAnglesDeg[1].DegToRad(),
