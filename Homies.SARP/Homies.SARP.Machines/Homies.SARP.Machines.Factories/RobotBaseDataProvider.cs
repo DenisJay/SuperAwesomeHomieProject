@@ -1,9 +1,8 @@
 ﻿using System;
-using Homies.SARP.Machines.Factories;
 using Homies.SARP.Mathematics.Transformations;
 using MathNet.Numerics.LinearAlgebra.Double;
 
-namespace Homies.SARP.Machines.MachineStructures
+namespace Homies.SARP.Machines.Factories
 {
 	public static class RobotBaseDataProvider
 	{

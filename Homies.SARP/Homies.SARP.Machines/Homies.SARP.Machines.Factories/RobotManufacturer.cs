@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-
-namespace Homies.SARP.Machines.Factories
+﻿namespace Homies.SARP.Machines.Factories
 {
 	public enum RobotManufacturer
 	{

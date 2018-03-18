@@ -129,20 +129,20 @@ namespace Homies.SARP.Kinematics.Inverse
 
 			if (Math.Sin(theta5[0]).DoubleEquals(0.0))
 			{
-				theta6[1] = Math.Atan2(-R22, R21);
+				theta6[1] = Math.Atan2(R22, R21);
 			}
 			else
 			{
-				theta6[1] = Math.Atan2(-R22 / Math.Sin(theta5[0]), R21 / Math.Sin(theta5[0]));
+				theta6[1] = Math.Atan2(R22 / Math.Sin(theta5[0]), R21 / Math.Sin(theta5[0]));
 			}
 
 			if (Math.Sin(theta5[1]).DoubleEquals(0.0))
 			{
-				theta6[0] = Math.Atan2(-R22, R21);
+				theta6[0] = Math.Atan2(R22, R21);
 			}
 			else
 			{
-				theta6[0] = Math.Atan2(-R22 / Math.Sin(theta5[1]), R21 / Math.Sin(theta5[1]));
+				theta6[0] = Math.Atan2(R22 / Math.Sin(theta5[1]), R21 / Math.Sin(theta5[1]));
 			}
 
 			ResultAxisSolutions.Add(new double[] { theta4[0].RadToDeg(), theta4[1].RadToDeg() });

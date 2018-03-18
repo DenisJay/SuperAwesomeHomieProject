@@ -1,10 +1,9 @@
 ﻿using Homies.SARP.Kinematics.Common;
 using Homies.SARP.Mathematics.Transformations;
-using System.Windows.Media.Media3D;
 
 namespace Homies.SARP.Machines.BaseStructure
 {
-    public abstract class Joint
+	public abstract class Joint
     {
         #region Constants
 

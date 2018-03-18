@@ -1,18 +1,17 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using MathNet.Numerics.LinearAlgebra.Double;
-using Homies.SARP.Machines.BaseStructure;
-using Homies.SARP.Mathematics.Transformations;
-using Homies.SARP.Kinematics.Common;
+﻿using Homies.SARP.Common.Extensions;
 using Homies.SARP.Kinematics;
-using Homies.SARP.Machines.Factories;
 using Homies.SARP.Kinematics.Inverse;
+using Homies.SARP.Machines.BaseStructure;
+using Homies.SARP.Machines.Factories;
 using Homies.SARP.Mathematics.Primitives;
-using Homies.SARP.Common.Extensions;
+using Homies.SARP.Mathematics.Transformations;
+using MathNet.Numerics.LinearAlgebra.Double;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Homies.SARP.Machines.MachineStructures
 {
-    public class Robot
+	public class Robot
     {
 
         #region FIELDS
