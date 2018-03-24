@@ -23,11 +23,8 @@ namespace Homies.SARP.Machines.MachineStructures
 
 		//TODO: implement transformations
 		TransformationMatrix _joint6ToFlangeTrafo;
-		List<TransformationMatrix> _tcpTrafos;
-
-		int _currentTCP;
-		int _currentBase;
-
+		
+		MachineFrames _frames;
 		InverseKinematics _invKin;
 
         #endregion //FIELDS
@@ -47,13 +44,13 @@ namespace Homies.SARP.Machines.MachineStructures
 			}
 
 			Kinematic = new RobotKinematics(dhParams);
+			
 			InitializeMember();
 			Joint6ToFlangeTrafo = RobotBaseDataProvider.GetJoint6ToFlangeTransformation(robotBrand);
 		}
 		
 		private void InitializeMember()
 		{
-			TcpTrafos = new List<TransformationMatrix>();
 			Joint6ToFlangeTrafo = new TransformationMatrix(Transformations.GetIdentityMatrix());
 			InvKin = new InverseKinematics();
 		}
@@ -98,19 +95,13 @@ namespace Homies.SARP.Machines.MachineStructures
         private void ComputeCurrentTarget()
         {
             TransformationMatrix target = new TransformationMatrix();
-
+			
             foreach (var joint in Joints)
             {
                 target *= joint.Value.JointTransformation;
             }
 
 			target *= Joint6ToFlangeTrafo;
-
-			if (CurrentTCP > 0 && TcpTrafos.Count >= CurrentTCP)
-			{
-				target *= TcpTrafos[CurrentTCP];
-			}
-
             CurrentTarget = target;
         }
 
@@ -172,19 +163,7 @@ namespace Homies.SARP.Machines.MachineStructures
 			get { return _joint6ToFlangeTrafo; }
 			set { _joint6ToFlangeTrafo = value; }
 		}
-
-		public List<TransformationMatrix> TcpTrafos
-		{
-			get { return _tcpTrafos; }
-			set { _tcpTrafos = value; }
-		}
-
-		public int CurrentTCP
-		{
-			get { return _currentTCP; }
-			set { _currentTCP = value; }
-		}
-
+		
 		public TransformationMatrix Target
 		{
 			get { return _target; }
@@ -196,7 +175,17 @@ namespace Homies.SARP.Machines.MachineStructures
 			get { return ComputeWristFrame(Target); }
 		}
 
-		public InverseKinematics InvKin { get => _invKin; set => _invKin = value; }
+		public InverseKinematics InvKin
+		{
+			get { return _invKin; }
+			set { _invKin = value; }
+		}
+
+		public MachineFrames Frames
+		{
+			get { return _frames; }
+			set { _frames = value; }
+		}
 
 		public RobotKinematics Kinematic;
 

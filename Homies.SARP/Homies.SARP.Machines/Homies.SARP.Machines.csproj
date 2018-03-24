@@ -54,6 +54,7 @@
     <Compile Include="Homies.SARP.Machines.Factories\KukaRobotModelFactory.cs" />
     <Compile Include="Homies.SARP.Machines.Factories\RobotManufacturer.cs" />
     <Compile Include="Homies.SARP.Machines.Factories\RobotModels.cs" />
+    <Compile Include="Homies.SARP.Machines.MachineStructures\MachineFrames.cs" />
     <Compile Include="Homies.SARP.Machines.MachineStructures\Robot.cs" />
     <Compile Include="Homies.SARP.Machines.Factories\RobotBaseDataProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

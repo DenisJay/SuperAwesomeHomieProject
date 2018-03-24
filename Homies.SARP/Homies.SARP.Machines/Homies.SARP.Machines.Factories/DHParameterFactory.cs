@@ -26,16 +26,13 @@ namespace Homies.SARP.Machines.Factories
 			{
 				case RobotModels.Kuka_KR300_R2500:
 					throw new NotImplementedException();
-					break;
 				case RobotModels.Kuka_KR270_R2700:
 					parameter = KukaRobotModelFactory.GetDHForKR270R2700();
 					break;
 				case RobotModels.Kuka_KR240_R2900:
 					throw new NotImplementedException();
-					break;
 				case RobotModels.Kuka_KR210_R3100:
 					throw new NotImplementedException();
-					break;
 				default:
 					break;
 			}

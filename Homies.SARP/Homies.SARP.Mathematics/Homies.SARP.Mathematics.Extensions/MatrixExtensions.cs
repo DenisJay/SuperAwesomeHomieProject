@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media.Media3D;
+﻿using System.Windows.Media.Media3D;
 
 namespace Homies.SARP.Mathematics.Homies.SARP.Mathematics.Extensions
 {
 
-    public static class MatrixExtensions
+	public static class MatrixExtensions
     {
         public static Matrix3D GetRelativeMatrix(this Matrix3D from, Matrix3D to)
         {
