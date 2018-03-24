@@ -46,6 +46,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Homies.SARP.Kinematics.Common\DHParameter.cs" />
+    <Compile Include="Homies.SARP.Kinematics.Common\RobotPoseStatusConfiguration.cs" />
+    <Compile Include="Homies.SARP.Kinematics.Enums\RobotPoseStatus.cs" />
     <Compile Include="Homies.SARP.Kinematics.Forward\IForwardKinematics.cs" />
     <Compile Include="Homies.SARP.Kinematics.Forward\ForwardKinematics.cs" />
     <Compile Include="Homies.SARP.Kinematics\RobotKinematics.cs" />
@@ -53,9 +55,7 @@
     <Compile Include="Homies.SARP.Kinematics.Inverse\InverseKinematics.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Homies.SARP.Kinematics.Enums\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Homies.SARP.Common\Homies.SARP.Common.csproj">
       <Project>{87913ab1-e243-47b7-aa75-e1a0df960ba6}</Project>
