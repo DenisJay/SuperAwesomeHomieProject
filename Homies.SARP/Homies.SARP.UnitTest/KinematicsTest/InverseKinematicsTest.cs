@@ -93,5 +93,56 @@ namespace Homies.SARP.UnitTest.KinematicsTest
 			_testRobot.ComputeAnglesForTargetFrame(_testRobot.CurrentTarget);
 			Assert.IsTrue(testAnglesDeg[5].DoubleEquals(_testRobot.InvKin.ResultAxisSolutions[5][0]));
 		}
+
+		[TestMethod]
+		public void TestForwardBackwardTarget()
+		{
+			_testRobot.ComputeAnglesForTargetFrame(_testRobot.CurrentTarget);
+			var originalFrame = new TransformationMatrix(_testRobot.CurrentTarget.DenseMatrix);
+
+			Debug.Print(_testRobot.Joints[0].JointValue.RadToDeg().ToString());
+			Debug.Print(_testRobot.CurrentTarget.DenseMatrix.ToString());
+
+			var axisAngles = new List<double>() {
+				_testRobot.InvKin.ResultAxisSolutions[0][1],
+				_testRobot.InvKin.ResultAxisSolutions[1][0],
+				_testRobot.InvKin.ResultAxisSolutions[2][0],
+				_testRobot.InvKin.ResultAxisSolutions[3][0],
+				_testRobot.InvKin.ResultAxisSolutions[4][0],
+				_testRobot.InvKin.ResultAxisSolutions[5][0]
+			};
+
+			_testRobot.SetAnglesInDegree(axisAngles);
+
+			Debug.Print(_testRobot.CurrentTarget.DenseMatrix.ToString());
+			Debug.Print(_testRobot.Joints[0].JointValue.RadToDeg().ToString());
+
+			var newFrame = _testRobot.CurrentTarget;
+			var res = newFrame.DenseMatrix - originalFrame.DenseMatrix;
+			double sumResult = res.ToColumnMajorArray().Sum();
+
+			Debug.Assert(sumResult.DoubleEquals(0.0));
+		}
+
+		[TestMethod]
+		public void TestElbowUpElbowDownTarget()
+		{
+			_testRobot.ComputeAnglesForTargetFrame(_testRobot.CurrentTarget);
+
+			// check whether the elbow down configuration 
+			// has the same same target as the elbow up configuration
+			Debug.Assert(false);
+		}
+
+		[TestMethod]
+		public void TestWristFlippedTarget()
+		{
+			_testRobot.ComputeAnglesForTargetFrame(_testRobot.CurrentTarget);
+
+			// check whether the wrist flipped configuration 
+			// has the same target as the wrist unflipped configuration
+			Debug.Assert(false);
+		}
+
 	}
 }
