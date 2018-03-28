@@ -97,16 +97,17 @@ namespace Homies.SARP.UnitTest.KinematicsTest
 		[TestMethod]
 		public void TestForwardBackwardTarget()
 		{
-			_testRobot.ComputeAnglesForTargetFrame(_testRobot.CurrentTarget);
-			var originalFrame = new TransformationMatrix(_testRobot.CurrentTarget.DenseMatrix);
+			_testRobot.SetAnglesInDegree(new List<double>() { 5, -110, 0, 0, 0, 0 }); 
 
-			Debug.Print(_testRobot.Joints[0].JointValue.RadToDeg().ToString());
-			Debug.Print(_testRobot.CurrentTarget.DenseMatrix.ToString());
+			_testRobot.ComputeAnglesForTargetFrame(_testRobot.CurrentTarget);
+			var originalFrame = new TransformationMatrix(_testRobot.CurrentWrist.DenseMatrix);
+			
+			Debug.Print(_testRobot.CurrentWrist.DenseMatrix.ToString());
 
 			var axisAngles = new List<double>() {
 				_testRobot.InvKin.ResultAxisSolutions[0][1],
-				_testRobot.InvKin.ResultAxisSolutions[1][0],
-				_testRobot.InvKin.ResultAxisSolutions[2][0],
+				_testRobot.InvKin.ResultAxisSolutions[1][2],
+				_testRobot.InvKin.ResultAxisSolutions[2][1],
 				_testRobot.InvKin.ResultAxisSolutions[3][0],
 				_testRobot.InvKin.ResultAxisSolutions[4][0],
 				_testRobot.InvKin.ResultAxisSolutions[5][0]
@@ -114,10 +115,10 @@ namespace Homies.SARP.UnitTest.KinematicsTest
 
 			_testRobot.SetAnglesInDegree(axisAngles);
 
-			Debug.Print(_testRobot.CurrentTarget.DenseMatrix.ToString());
+			Debug.Print(_testRobot.CurrentWrist.DenseMatrix.ToString());
 			Debug.Print(_testRobot.Joints[0].JointValue.RadToDeg().ToString());
 
-			var newFrame = _testRobot.CurrentTarget;
+			var newFrame = _testRobot.CurrentWrist;
 			var res = newFrame.DenseMatrix - originalFrame.DenseMatrix;
 			double sumResult = res.ToColumnMajorArray().Sum();
 

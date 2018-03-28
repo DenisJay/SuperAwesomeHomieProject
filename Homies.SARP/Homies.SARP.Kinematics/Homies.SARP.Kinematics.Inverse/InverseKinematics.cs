@@ -26,6 +26,9 @@ namespace Homies.SARP.Kinematics.Inverse
 			ResultAxisValues = new List<double>();
 		}
 
+
+		//TODO: computation of angle 2 + 3 is dependent ont the wrist point relative to axis 2
+		// when lloking backward wristpoint is completly different. need to fix that up.
 		public void GetAngles1To3(XPoint wristPoint, List<DHParameter> dhParam)
 		{
 			var wristToAxis1 = new XPoint(dhParam.First().JointStandardTransform.DenseMatrix * wristPoint.DensePoint3D);
@@ -60,25 +63,25 @@ namespace Homies.SARP.Kinematics.Inverse
 			double lookForwardSolution1 = Math.PI / 2 - (flipFlapLookForward + angle1);
 			double lookForwardSolution2 = Math.PI / 2 - angle2;
 			double lookForwardSolution3 = Math.PI / 2 - (flipFlapLookForward - angle1);
-			double lookForwardSolution4 = angle2 - Math.PI * 3 / 2;
+			double lookForwardSolution4 = angle2 - Math.PI*1.5;
 
 			double lookBackwardSolution1 = Math.PI / 2 - (flipFlapLookBackward + angle1);
 			double lookBackwardSolution2 = Math.PI / 2 - angle2;
 			double lookBackwardSolution3 = Math.PI / 2 - (flipFlapLookBackward - angle1);
-			double lookBackwardSolution4 = angle2 - Math.PI * 3 / 2;
+			double lookBackwardSolution4 = angle2 - Math.PI * 1.5;
 
 			ResultAxisSolutions.Add(new double[] {
-				lookForwardSolution1.RadToDeg() - dhParam[1].AngleOffset,
-				lookForwardSolution3.RadToDeg() - dhParam[1].AngleOffset,
-				lookBackwardSolution1.RadToDeg() - dhParam[1].AngleOffset,
-				lookBackwardSolution3.RadToDeg() - dhParam[1].AngleOffset,
+				lookForwardSolution1.RadToDeg() - dhParam[1].AngleOffset,  //look forward elbow up axis 2
+				lookForwardSolution3.RadToDeg() - dhParam[1].AngleOffset,  //look forward elbow down axis 2
+				lookBackwardSolution1.RadToDeg() - dhParam[1].AngleOffset, //look backward elbow up axis 2
+				lookBackwardSolution3.RadToDeg() - dhParam[1].AngleOffset, //look backward elbow down axis 2
 			});
 
 			ResultAxisSolutions.Add(new double[] {
-				lookForwardSolution2.RadToDeg() - dhParam[2].AngleOffset,
-				lookForwardSolution4.RadToDeg() - dhParam[2].AngleOffset,
-				lookBackwardSolution2.RadToDeg() - dhParam[2].AngleOffset,
-				lookBackwardSolution4.RadToDeg() - dhParam[2].AngleOffset,
+				lookForwardSolution2.RadToDeg() - dhParam[2].AngleOffset,  //look forward elbow up axis 3
+				lookForwardSolution4.RadToDeg() - dhParam[2].AngleOffset,  //look forward elbow down axis 3
+				lookBackwardSolution2.RadToDeg() - dhParam[2].AngleOffset, //look backward elbow up axis 3
+				lookBackwardSolution4.RadToDeg() - dhParam[2].AngleOffset, //look backward elbow down axis 3
 			});
 		}
 
